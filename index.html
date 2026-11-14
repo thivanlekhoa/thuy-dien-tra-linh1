@@ -582,6 +582,228 @@
         <button onclick="resetDocsState()" class="text-xs text-sky-700 hover:text-sky-900 underline font-semibold shrink-0">Reset trạng thái</button>
       </div>
 
+      <!-- ============================================================= -->
+      <!-- STANDARDIZED DATA & SCRIPTS REPOSITORY SHOWCASE -->
+      <!-- ============================================================= -->
+      <div class="mt-10 pt-8 border-t border-slate-200 space-y-6">
+        
+        <div class="flex flex-col md:flex-row md:items-center justify-between gap-4 bg-gradient-to-r from-slate-900 via-sky-950 to-indigo-950 p-6 rounded-2xl text-white shadow-md">
+          <div>
+            <div class="flex items-center gap-2 mb-2">
+              <span class="px-2.5 py-0.5 rounded-full text-[11px] font-bold bg-emerald-500/20 text-emerald-300 border border-emerald-500/30">
+                <i class="fa-solid fa-circle-check mr-1"></i> Data Pipeline Ready (v1.0 Standardized)
+              </span>
+              <span class="px-2.5 py-0.5 rounded-full text-[11px] font-bold bg-sky-500/20 text-sky-300 border border-sky-500/30">
+                <i class="fa-brands fa-python mr-1"></i> 7 Automation Scripts
+              </span>
+            </div>
+            <h3 class="text-xl font-black text-white">Kho Dữ Liệu Input Chuẩn Hóa & Scripts Xử Lý Số Liệu</h3>
+            <p class="text-xs sm:text-sm text-slate-300 mt-1 max-w-3xl">
+              Toàn bộ số liệu nền tảng đã được tự động sàng lọc từ hồ sơ Thiết kế cơ sở, Báo cáo Khí tượng Thủy văn, Thủy năng, Bản vẽ CAD và Giấy phép 308/GP-BNNMT; chuyển đổi sang định dạng CSV/JSON chuẩn quốc tế, phân bổ theo đúng 5 gói công việc trong thư mục <code>data/</code> và <code>script/</code>.
+            </p>
+          </div>
+          <div class="flex flex-col sm:flex-row items-center gap-3 shrink-0">
+            <div class="bg-slate-800/80 border border-slate-700 px-4 py-2.5 rounded-xl text-center">
+              <div class="text-[11px] text-slate-400 font-medium">Lệnh chạy toàn bộ Pipeline</div>
+              <code class="text-xs font-mono font-bold text-amber-300">py script/run_all_extractions.py</code>
+            </div>
+          </div>
+        </div>
+
+        <!-- 5 WORK PACKAGES DATA GRID -->
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-5">
+
+          <!-- CARD PACKAGE 01 -->
+          <div class="bg-white border border-slate-200 rounded-2xl p-5 shadow-sm hover:border-sky-300 transition-all flex flex-col justify-between">
+            <div>
+              <div class="flex items-center justify-between mb-3">
+                <span class="px-2.5 py-1 rounded-md text-xs font-black bg-blue-100 text-blue-800">GÓI 01: data/package01/</span>
+                <span class="text-xs font-semibold text-slate-500"><i class="fa-solid fa-file-csv text-emerald-600 mr-1"></i>4 CSV | <i class="fa-solid fa-file-code text-amber-600 mr-1"></i>2 JSON</span>
+              </div>
+              <h4 class="text-base font-bold text-slate-900 mb-1">Lập Bản Đồ Ngập Lụt Hạ Du Đập</h4>
+              <p class="text-xs text-slate-600 mb-3">Dữ liệu thủy lực lũ, quan hệ Z-V-F và tham số vỡ đập phục vụ mô hình HEC-RAS 2D unsteady flow.</p>
+              
+              <div class="space-y-1.5 text-xs text-slate-700 bg-slate-50 p-3 rounded-xl border border-slate-100 font-mono">
+                <div class="flex items-center justify-between py-0.5 border-b border-slate-200/60">
+                  <span class="font-bold text-slate-900">flood_hydrographs_dam_and_powerhouse.csv</span>
+                  <span class="text-[11px] text-slate-500">28 bước thời gian (P=0.2% đến 10%)</span>
+                </div>
+                <div class="flex items-center justify-between py-0.5 border-b border-slate-200/60">
+                  <span class="font-bold text-slate-900">reservoir_zvf_curve.csv</span>
+                  <span class="text-[11px] text-slate-500">25 cao trình Z-F-V (1125m - 1172m)</span>
+                </div>
+                <div class="flex items-center justify-between py-0.5 border-b border-slate-200/60">
+                  <span class="font-bold text-slate-900">spillway_and_discharge_rating_curves.csv</span>
+                  <span class="text-[11px] text-slate-500">56 điểm xả tràn B=40m & xả cát 4x5m</span>
+                </div>
+                <div class="flex items-center justify-between py-0.5 border-b border-slate-200/60">
+                  <span class="font-bold text-slate-900">downstream_dam_toe_rating_curve.csv</span>
+                  <span class="text-[11px] text-slate-500">19 điểm Q-Z chân đập (1114m - 1122m)</span>
+                </div>
+                <div class="flex items-center justify-between py-0.5 border-b border-slate-200/60">
+                  <span class="font-bold text-slate-900">dam_break_parameters_froehlich.json</span>
+                  <span class="text-[11px] text-slate-500">3 kịch bản Froehlich 2008</span>
+                </div>
+                <div class="flex items-center justify-between py-0.5">
+                  <span class="font-bold text-slate-900">downstream_reach_specs.json</span>
+                  <span class="text-[11px] text-slate-500">Đoạn sông Nước Nô 4,7km (i=9.31%)</span>
+                </div>
+              </div>
+            </div>
+            <div class="mt-4 pt-3 border-t border-slate-100 flex items-center justify-between text-[11px] text-slate-500">
+              <span>Nguồn: TMTV 2025 (Bảng 14PL, 15PL), Thủy năng (Bảng 2.3), PL-DM-01, 03</span>
+              <span class="font-bold text-blue-600">HEC-RAS 1D/2D Input</span>
+            </div>
+          </div>
+
+          <!-- CARD PACKAGE 02 -->
+          <div class="bg-white border border-slate-200 rounded-2xl p-5 shadow-sm hover:border-amber-300 transition-all flex flex-col justify-between">
+            <div>
+              <div class="flex items-center justify-between mb-3">
+                <span class="px-2.5 py-1 rounded-md text-xs font-black bg-amber-100 text-amber-800">GÓI 02: data/package02/</span>
+                <span class="text-xs font-semibold text-slate-500"><i class="fa-solid fa-file-csv text-emerald-600 mr-1"></i>1 CSV | <i class="fa-solid fa-file-code text-amber-600 mr-1"></i>2 JSON</span>
+              </div>
+              <h4 class="text-base font-bold text-slate-900 mb-1">Phương Án Ứng Phó Tình Huống Khẩn Cấp (EAP)</h4>
+              <p class="text-xs text-slate-600 mb-3">Tiêu chí kích hoạt 3 cấp độ khẩn cấp, ma trận điều hành thông báo hạ du và các điểm cao sơ tán an toàn.</p>
+              
+              <div class="space-y-1.5 text-xs text-slate-700 bg-slate-50 p-3 rounded-xl border border-slate-100 font-mono">
+                <div class="flex items-center justify-between py-0.5 border-b border-slate-200/60">
+                  <span class="font-bold text-slate-900">emergency_levels_and_triggers.json</span>
+                  <span class="text-[11px] text-slate-500">3 cấp: Vàng, Cam, Đỏ & còi hú</span>
+                </div>
+                <div class="flex items-center justify-between py-0.5 border-b border-slate-200/60">
+                  <span class="font-bold text-slate-900">emergency_notification_matrix.csv</span>
+                  <span class="text-[11px] text-slate-500">10 cấp điều hành & liên lạc PCTT</span>
+                </div>
+                <div class="flex items-center justify-between py-0.5">
+                  <span class="font-bold text-slate-900">downstream_vulnerability_inventory.json</span>
+                  <span class="text-[11px] text-slate-500">Thôn 1, 2 Trà Linh, 3 điểm sơ tán</span>
+                </div>
+              </div>
+            </div>
+            <div class="mt-4 pt-3 border-t border-slate-100 flex items-center justify-between text-[11px] text-slate-500">
+              <span>Nguồn: NĐ 114/2018/NĐ-CP, Khảo sát dân sinh hạ du 2025</span>
+              <span class="font-bold text-amber-600">EAP Operational Flow</span>
+            </div>
+          </div>
+
+          <!-- CARD PACKAGE 03 -->
+          <div class="bg-white border border-slate-200 rounded-2xl p-5 shadow-sm hover:border-emerald-300 transition-all flex flex-col justify-between">
+            <div>
+              <div class="flex items-center justify-between mb-3">
+                <span class="px-2.5 py-1 rounded-md text-xs font-black bg-emerald-100 text-emerald-800">GÓI 03: data/package03/</span>
+                <span class="text-xs font-semibold text-slate-500"><i class="fa-solid fa-file-csv text-emerald-600 mr-1"></i>2 CSV | <i class="fa-solid fa-file-code text-amber-600 mr-1"></i>2 JSON</span>
+              </div>
+              <h4 class="text-base font-bold text-slate-900 mb-1">Quy Trình Vận Hành Hồ Chứa Thủy Điện</h4>
+              <p class="text-xs text-slate-600 mb-3">Chuỗi lưu lượng ngày 48 năm (1977-2024), quy định dòng chảy môi trường GP 308/GP-BNNMT và quy chế phát điện Pelton 29,6MW.</p>
+              
+              <div class="space-y-1.5 text-xs text-slate-700 bg-slate-50 p-3 rounded-xl border border-slate-100 font-mono">
+                <div class="flex items-center justify-between py-0.5 border-b border-slate-200/60">
+                  <span class="font-bold text-slate-900">daily_discharge_1977_2024.csv</span>
+                  <span class="text-[11px] text-slate-500 font-bold text-emerald-700">17.532 dòng dữ liệu 48 năm</span>
+                </div>
+                <div class="flex items-center justify-between py-0.5 border-b border-slate-200/60">
+                  <span class="font-bold text-slate-900">monthly_discharge_summary_1977_2024.csv</span>
+                  <span class="text-[11px] text-slate-500">Tổng kết tháng & mùa lũ/kiệt</span>
+                </div>
+                <div class="flex items-center justify-between py-0.5 border-b border-slate-200/60">
+                  <span class="font-bold text-slate-900">environmental_flow_regulations.json</span>
+                  <span class="text-[11px] text-slate-500">GP 308: 0,246 m³/s đập chính + Chiron</span>
+                </div>
+                <div class="flex items-center justify-between py-0.5">
+                  <span class="font-bold text-slate-900">plant_and_reservoir_operating_rules.json</span>
+                  <span class="text-[11px] text-slate-500">MNDBT 1167m, MNC 1150m, T_đóng=35s</span>
+                </div>
+              </div>
+            </div>
+            <div class="mt-4 pt-3 border-t border-slate-100 flex items-center justify-between text-[11px] text-slate-500">
+              <span>Nguồn: Tập 1.2 Thủy văn, GP 308/GP-BNNMT, Tập 2.1 TKCS</span>
+              <span class="font-bold text-emerald-600">Reservoir Simulation Input</span>
+            </div>
+          </div>
+
+          <!-- CARD PACKAGE 04 & 05 -->
+          <div class="bg-white border border-slate-200 rounded-2xl p-5 shadow-sm hover:border-purple-300 transition-all flex flex-col justify-between">
+            <div>
+              <div class="flex items-center justify-between mb-3">
+                <span class="px-2.5 py-1 rounded-md text-xs font-black bg-purple-100 text-purple-800">GÓI 04 & 05: data/package04/ & 05/</span>
+                <span class="text-xs font-semibold text-slate-500"><i class="fa-solid fa-file-csv text-emerald-600 mr-1"></i>3 CSV | <i class="fa-solid fa-file-code text-amber-600 mr-1"></i>4 JSON</span>
+              </div>
+              <h4 class="text-base font-bold text-slate-900 mb-1">Cắm Mốc Bảo Vệ Đập & Hành Lang Nguồn Nước</h4>
+              <p class="text-xs text-slate-600 mb-3">229 mốc tọa độ VN-2000, 10 mốc lòng hồ, bảng diện tích 30,31 ha theo Nghị định 114/2018/NĐ-CP & Nghị định 53/2024/NĐ-CP.</p>
+              
+              <div class="space-y-1.5 text-xs text-slate-700 bg-slate-50 p-3 rounded-xl border border-slate-100 font-mono">
+                <div class="flex items-center justify-between py-0.5 border-b border-slate-200/60">
+                  <span class="font-bold text-slate-900">dam_boundary_coordinates_vn2000.csv</span>
+                  <span class="text-[11px] text-slate-500 font-bold text-purple-700">229 điểm (D, M, T, O, P, B, L, C, V)</span>
+                </div>
+                <div class="flex items-center justify-between py-0.5 border-b border-slate-200/60">
+                  <span class="font-bold text-slate-900">reservoir_perimeter_coordinates_vn2000.csv</span>
+                  <span class="text-[11px] text-slate-500">10 điểm biên lòng hồ H1 đến H10</span>
+                </div>
+                <div class="flex items-center justify-between py-0.5 border-b border-slate-200/60">
+                  <span class="font-bold text-slate-900">land_occupation_summary.csv</span>
+                  <span class="text-[11px] text-slate-500">10 hạng mục diện tích đất (30,31 ha)</span>
+                </div>
+                <div class="flex items-center justify-between py-0.5">
+                  <span class="font-bold text-slate-900">dam_safety & water_corridor_criteria.json</span>
+                  <span class="text-[11px] text-slate-500">Quy chuẩn BTCT M200 15x15x100cm</span>
+                </div>
+              </div>
+            </div>
+            <div class="mt-4 pt-3 border-t border-slate-100 flex items-center justify-between text-[11px] text-slate-500">
+              <span>Nguồn: Bản vẽ TKCS (Toa do- TL1.xls), NĐ 114/2018 & NĐ 53/2024</span>
+              <span class="font-bold text-purple-600">GIS & GPS Field Staking</span>
+            </div>
+          </div>
+
+        </div>
+
+        <!-- PYTHON SCRIPTS SHOWCASE -->
+        <div class="bg-slate-900 text-slate-200 rounded-2xl p-6 border border-slate-800 shadow-lg">
+          <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3 mb-4">
+            <div>
+              <h4 class="text-base font-bold text-white flex items-center gap-2">
+                <i class="fa-brands fa-python text-yellow-400 text-lg"></i>
+                Hệ Thống Scripts Xử Lý & Tính Toán Tự Động (script/)
+              </h4>
+              <p class="text-xs text-slate-400">Các scripts Python độc lập, có thể tái sử dụng và kiểm thử tự động toàn diện.</p>
+            </div>
+            <span class="px-3 py-1 bg-slate-800 text-slate-300 rounded-lg text-xs font-mono font-semibold border border-slate-700">
+              Python 3.10+ / pandas / openpyxl / xlrd / pypdf
+            </span>
+          </div>
+
+          <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-3 text-xs">
+            <div class="bg-slate-800/60 p-3 rounded-xl border border-slate-700/60">
+              <div class="font-mono font-bold text-sky-300 mb-1">extract_hydrology.py</div>
+              <div class="text-slate-400 text-[11px]">Quét file Excel thủy văn, trích xuất 17.532 dòng ngày 48 năm (1977-2024), sắp xếp thời gian chuẩn và tính toán đặc trưng tháng.</div>
+            </div>
+            <div class="bg-slate-800/60 p-3 rounded-xl border border-slate-700/60">
+              <div class="font-mono font-bold text-sky-300 mb-1">extract_coordinates.py</div>
+              <div class="text-slate-400 text-[11px]">Trích xuất 229 mốc tọa độ VN-2000 (KTT 107°45', múi chiếu 3°) từ bản vẽ CAD/Excel và tính toán cơ cấu chiếm đất 30,31 ha.</div>
+            </div>
+            <div class="bg-slate-800/60 p-3 rounded-xl border border-slate-700/60">
+              <div class="font-mono font-bold text-sky-300 mb-1">extract_package01_flood_data.py</div>
+              <div class="text-slate-400 text-[11px]">Trích xuất quá trình lũ thiết kế Bảng 14PL/15PL, bảng Z-F-V lòng hồ và thiết lập thông số vỡ đập Froehlich 2008.</div>
+            </div>
+            <div class="bg-slate-800/60 p-3 rounded-xl border border-slate-700/60">
+              <div class="font-mono font-bold text-sky-300 mb-1">build_package02_eap_data.py</div>
+              <div class="text-slate-400 text-[11px]">Xây dựng tiêu chí 3 cấp tình huống khẩn cấp, ma trận thông báo 10 cấp điều hành và danh mục 3 điểm sơ tán an toàn hạ du.</div>
+            </div>
+            <div class="bg-slate-800/60 p-3 rounded-xl border border-slate-700/60">
+              <div class="font-mono font-bold text-sky-300 mb-1">build_package03_operation_data.py</div>
+              <div class="text-slate-400 text-[11px]">Số hóa Giấy phép số 308/GP-BNNMT về dòng chảy tối thiểu 0,246 m³/s và quy chế điều tiết lũ/kiệt nhà máy Pelton 29,6MW.</div>
+            </div>
+            <div class="bg-slate-800/60 p-3 rounded-xl border border-slate-700/60">
+              <div class="font-mono font-bold text-sky-300 mb-1">build_package04_05_corridor_data.py</div>
+              <div class="text-slate-400 text-[11px]">Quy chuẩn kỹ thuật hành lang bảo vệ đập cấp II (NĐ 114/2018) và hành lang nguồn nước (NĐ 53/2024 & Luật TNN 2023).</div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+
     </div>
 
     <!-- ================================================================= -->
@@ -1069,7 +1291,7 @@
 
     // STATE MANAGEMENT (WITH LOCALSTORAGE)
     // Auto refresh data version to purge any cached LaTeX markup
-    const APP_VERSION = 'v1.3_clean_unicode';
+    const APP_VERSION = 'v1.4_data_hub';
     if (localStorage.getItem('tl1_app_version') !== APP_VERSION) {
       localStorage.removeItem('tl1_packages');
       localStorage.removeItem('tl1_docs');
