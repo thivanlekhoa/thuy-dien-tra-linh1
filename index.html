@@ -1,0 +1,1560 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Hệ thống Quản lý Dự án & Gói thầu Chuẩn bị Vận hành Thủy điện Trà Linh 1 (29,6 MW)</title>
+  
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <!-- FontAwesome Icons -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <!-- Google Fonts: Be Vietnam Pro -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;1,400&display=swap" rel="stylesheet">
+  
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          fontFamily: {
+            sans: ['"Be Vietnam Pro"', 'sans-serif'],
+          },
+          colors: {
+            brand: {
+              50: '#f0f7ff',
+              100: '#e0effe',
+              200: '#bae0fd',
+              500: '#0284c7',
+              600: '#0369a1',
+              700: '#075985',
+              800: '#0c4a6e',
+              900: '#082f49',
+              950: '#0a192f',
+            }
+          }
+        }
+      }
+    }
+  </script>
+
+  <style>
+    body {
+      font-family: 'Be Vietnam Pro', sans-serif;
+      scroll-behavior: smooth;
+    }
+    .custom-scrollbar::-webkit-scrollbar {
+      width: 6px;
+      height: 6px;
+    }
+    .custom-scrollbar::-webkit-scrollbar-track {
+      background: #f1f5f9;
+    }
+    .custom-scrollbar::-webkit-scrollbar-thumb {
+      background: #cbd5e1;
+      border-radius: 4px;
+    }
+    .custom-scrollbar::-webkit-scrollbar-thumb:hover {
+      background: #94a3b8;
+    }
+    @media print {
+      .no-print {
+        display: none !important;
+      }
+      .print-only {
+        display: block !important;
+      }
+      body {
+        background: white !important;
+        color: black !important;
+      }
+      .tab-content {
+        display: block !important;
+      }
+    }
+  </style>
+</head>
+<body class="bg-slate-50 text-slate-800 antialiased min-h-screen flex flex-col">
+
+  <!-- TOP NOTIFICATION BANNER -->
+  <div class="bg-gradient-to-r from-blue-900 via-sky-800 to-indigo-900 text-white text-xs sm:text-sm py-2 px-4 shadow-md no-print">
+    <div class="max-w-7xl mx-auto flex flex-wrap items-center justify-between gap-2">
+      <div class="flex items-center gap-2">
+        <span class="inline-flex items-center px-2 py-0.5 rounded-full text-xs font-semibold bg-emerald-500/20 text-emerald-300 border border-emerald-400/30 animate-pulse">
+          <i class="fa-solid fa-circle text-[8px] mr-1 text-emerald-400"></i> Chuẩn bị tích nước & phát điện
+        </span>
+        <span class="font-medium">Dự án Thủy điện Trà Linh 1 - Công suất 29,6 MW</span>
+      </div>
+      <div class="flex items-center gap-4 text-xs text-sky-200">
+        <span><i class="fa-solid fa-building mr-1"></i> CĐT: Công ty TNHH Thanh Bình</span>
+        <span><i class="fa-solid fa-location-dot mr-1"></i> Xã Trà Linh & Trà Tập, TP Đà Nẵng</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- MAIN NAVIGATION BAR -->
+  <header class="bg-white border-b border-slate-200 sticky top-0 z-40 shadow-sm no-print">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="flex items-center justify-between h-16">
+        <!-- Brand Logo & Title -->
+        <div class="flex items-center gap-3">
+          <div class="w-10 h-10 rounded-xl bg-gradient-to-br from-sky-600 to-blue-800 flex items-center justify-center text-white shadow-md shadow-sky-600/20">
+            <i class="fa-solid fa-water text-lg"></i>
+          </div>
+          <div>
+            <div class="text-base sm:text-lg font-bold text-slate-900 tracking-tight leading-snug">
+              TRÀ LINH 1 <span class="text-sky-600 font-extrabold">PM-PORTAL</span>
+            </div>
+            <div class="text-[11px] text-slate-500 font-medium">Hệ thống Điều hành Gói thầu & Dữ liệu Dự án</div>
+          </div>
+        </div>
+
+        <!-- Navigation Tabs Desktop -->
+        <nav class="hidden md:flex items-center space-x-1 lg:space-x-2">
+          <button onclick="switchTab('dashboard')" id="btn-tab-dashboard" class="tab-btn active px-3 py-2 rounded-lg text-xs lg:text-sm font-semibold transition-all text-sky-600 bg-sky-50">
+            <i class="fa-solid fa-chart-pie mr-1.5"></i> Dashboard
+          </button>
+          <button onclick="switchTab('technical')" id="btn-tab-technical" class="tab-btn px-3 py-2 rounded-lg text-xs lg:text-sm font-medium text-slate-600 hover:text-sky-600 hover:bg-slate-50 transition-all">
+            <i class="fa-solid fa-bolt mr-1.5"></i> Thông số Kỹ thuật
+          </button>
+          <button onclick="switchTab('packages')" id="btn-tab-packages" class="tab-btn px-3 py-2 rounded-lg text-xs lg:text-sm font-medium text-slate-600 hover:text-sky-600 hover:bg-slate-50 transition-all">
+            <i class="fa-solid fa-layer-group mr-1.5"></i> 5 Hạng mục Gói thầu
+          </button>
+          <button onclick="switchTab('data')" id="btn-tab-data" class="tab-btn px-3 py-2 rounded-lg text-xs lg:text-sm font-medium text-slate-600 hover:text-sky-600 hover:bg-slate-50 transition-all">
+            <i class="fa-solid fa-folder-open mr-1.5"></i> Hồ sơ CĐT (Checklist)
+          </button>
+          <button onclick="switchTab('tasks')" id="btn-tab-tasks" class="tab-btn px-3 py-2 rounded-lg text-xs lg:text-sm font-medium text-slate-600 hover:text-sky-600 hover:bg-slate-50 transition-all">
+            <i class="fa-solid fa-list-check mr-1.5"></i> Quản lý Công việc
+          </button>
+          <button onclick="switchTab('timeline')" id="btn-tab-timeline" class="tab-btn px-3 py-2 rounded-lg text-xs lg:text-sm font-medium text-slate-600 hover:text-sky-600 hover:bg-slate-50 transition-all">
+            <i class="fa-solid fa-timeline mr-1.5"></i> Tiến độ 60 ngày
+          </button>
+        </nav>
+
+        <!-- Right Quick Actions -->
+        <div class="flex items-center gap-2">
+          <button onclick="exportDataJSON()" title="Xuất file JSON tiến độ để chia sẻ đồng nghiệp" class="p-2 text-slate-600 hover:text-sky-600 hover:bg-slate-100 rounded-lg text-xs font-medium flex items-center gap-1.5 border border-slate-200">
+            <i class="fa-solid fa-download"></i> <span class="hidden lg:inline">Xuất JSON</span>
+          </button>
+          <label title="Nạp file JSON cập nhật từ đồng nghiệp" class="cursor-pointer p-2 text-slate-600 hover:text-sky-600 hover:bg-slate-100 rounded-lg text-xs font-medium flex items-center gap-1.5 border border-slate-200">
+            <i class="fa-solid fa-upload"></i> <span class="hidden lg:inline">Nhập JSON</span>
+            <input type="file" id="importFileInput" onchange="importDataJSON(event)" accept=".json" class="hidden">
+          </label>
+          <button onclick="window.print()" title="In hoặc Lưu báo cáo PDF" class="p-2 bg-slate-900 text-white hover:bg-slate-800 rounded-lg text-xs font-medium flex items-center gap-1.5 shadow-sm">
+            <i class="fa-solid fa-print"></i> <span class="hidden sm:inline">In Báo cáo</span>
+          </button>
+        </div>
+      </div>
+
+      <!-- Mobile Tab Nav Horizontal Scroll -->
+      <div class="md:hidden flex overflow-x-auto space-x-1 py-2 custom-scrollbar border-t border-slate-100">
+        <button onclick="switchTab('dashboard')" class="tab-btn-m active px-3 py-1.5 whitespace-nowrap rounded-lg text-xs font-semibold text-sky-600 bg-sky-50">Dashboard</button>
+        <button onclick="switchTab('technical')" class="tab-btn-m px-3 py-1.5 whitespace-nowrap rounded-lg text-xs font-medium text-slate-600">Kỹ thuật</button>
+        <button onclick="switchTab('packages')" class="tab-btn-m px-3 py-1.5 whitespace-nowrap rounded-lg text-xs font-medium text-slate-600">5 Hạng mục</button>
+        <button onclick="switchTab('data')" class="tab-btn-m px-3 py-1.5 whitespace-nowrap rounded-lg text-xs font-medium text-slate-600">Dữ liệu CĐT</button>
+        <button onclick="switchTab('tasks')" class="tab-btn-m px-3 py-1.5 whitespace-nowrap rounded-lg text-xs font-medium text-slate-600">Công việc</button>
+        <button onclick="switchTab('timeline')" class="tab-btn-m px-3 py-1.5 whitespace-nowrap rounded-lg text-xs font-medium text-slate-600">Tiến độ</button>
+      </div>
+    </div>
+  </header>
+
+  <!-- MAIN CONTAINER -->
+  <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6 flex-1 w-full">
+
+    <!-- ================================================================= -->
+    <!-- TAB 1: DASHBOARD (TỔNG QUAN) -->
+    <!-- ================================================================= -->
+    <div id="tab-dashboard" class="tab-pane space-y-6">
+      
+      <!-- WELCOME HERO BANNER -->
+      <div class="bg-gradient-to-br from-slate-900 via-sky-950 to-blue-900 rounded-2xl p-6 sm:p-8 text-white shadow-xl relative overflow-hidden">
+        <div class="absolute -right-10 -bottom-10 opacity-10 text-9xl text-white pointer-events-none">
+          <i class="fa-solid fa-water"></i>
+        </div>
+        <div class="relative z-10 max-w-3xl">
+          <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full text-xs font-medium bg-sky-500/20 text-sky-300 border border-sky-400/30 mb-3">
+            <i class="fa-solid fa-shield-halved"></i> Giám sát An toàn Đập & Quản lý Dự án
+          </div>
+          <h1 class="text-2xl sm:text-3xl font-extrabold tracking-tight text-white mb-2">
+            Gói Thầu 05 Nội Dung Chuẩn Bị Tích Nước & Vận Hành
+          </h1>
+          <p class="text-sm sm:text-base text-slate-300 leading-relaxed mb-6">
+            Dự án Thủy điện Trà Linh 1 (29,6 MW) do Công ty TNHH Thanh Bình làm Chủ đầu tư. Hệ thống web app hỗ trợ phân rã công việc, giám sát 60 ngày triển khai, yêu cầu tài liệu từ CĐT và bàn giao hồ sơ phê duyệt cho cơ quan nhà nước.
+          </p>
+          <div class="flex flex-wrap items-center gap-3">
+            <button onclick="switchTab('tasks')" class="px-4 py-2 bg-sky-500 hover:bg-sky-400 text-slate-950 text-xs sm:text-sm font-bold rounded-xl shadow-lg shadow-sky-500/25 transition-all flex items-center gap-2">
+              <i class="fa-solid fa-list-check"></i> Xem danh sách công việc
+            </button>
+            <button onclick="switchTab('data')" class="px-4 py-2 bg-white/10 hover:bg-white/20 text-white text-xs sm:text-sm font-semibold rounded-xl border border-white/20 transition-all flex items-center gap-2">
+              <i class="fa-solid fa-folder-open"></i> Bảng Check-list Hồ sơ CĐT
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <!-- KEY METRIC CARDS -->
+      <div class="grid grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6">
+        <!-- Metric 1: Tiến độ tổng thể -->
+        <div class="bg-white p-5 rounded-2xl border border-slate-200/80 shadow-sm hover:shadow-md transition-shadow">
+          <div class="flex items-center justify-between mb-3">
+            <span class="text-xs font-semibold uppercase text-slate-400 tracking-wider">Tiến độ chung</span>
+            <div class="w-8 h-8 rounded-lg bg-sky-50 text-sky-600 flex items-center justify-center text-sm">
+              <i class="fa-solid fa-chart-line"></i>
+            </div>
+          </div>
+          <div class="flex items-baseline gap-2 mb-2">
+            <span id="metric-overall-progress" class="text-3xl font-extrabold text-slate-900">0%</span>
+            <span class="text-xs text-slate-500 font-medium">hoàn thành</span>
+          </div>
+          <div class="w-full bg-slate-100 rounded-full h-2 overflow-hidden">
+            <div id="metric-progress-bar" class="bg-sky-500 h-2 rounded-full transition-all duration-500" style="width: 0%"></div>
+          </div>
+        </div>
+
+        <!-- Metric 2: Thời gian thực hiện -->
+        <div class="bg-white p-5 rounded-2xl border border-slate-200/80 shadow-sm hover:shadow-md transition-shadow">
+          <div class="flex items-center justify-between mb-3">
+            <span class="text-xs font-semibold uppercase text-slate-400 tracking-wider">Thời gian gói thầu</span>
+            <div class="w-8 h-8 rounded-lg bg-amber-50 text-amber-600 flex items-center justify-center text-sm">
+              <i class="fa-solid fa-stopwatch"></i>
+            </div>
+          </div>
+          <div class="flex items-baseline gap-2 mb-2">
+            <span class="text-3xl font-extrabold text-slate-900">60</span>
+            <span class="text-xs text-slate-500 font-medium">ngày theo dõi</span>
+          </div>
+          <p class="text-xs text-amber-700 bg-amber-50 px-2 py-0.5 rounded font-medium inline-block">
+            <i class="fa-regular fa-calendar-check mr-1"></i> Triển khai song song 5 mục
+          </p>
+        </div>
+
+        <!-- Metric 3: Tổng ngân sách gói -->
+        <div class="bg-white p-5 rounded-2xl border border-slate-200/80 shadow-sm hover:shadow-md transition-shadow">
+          <div class="flex items-center justify-between mb-3">
+            <span class="text-xs font-semibold uppercase text-slate-400 tracking-wider">Dự toán sau VAT</span>
+            <div class="w-8 h-8 rounded-lg bg-emerald-50 text-emerald-600 flex items-center justify-center text-sm">
+              <i class="fa-solid fa-coins"></i>
+            </div>
+          </div>
+          <div class="flex items-baseline gap-2 mb-2">
+            <span class="text-3xl font-extrabold text-slate-900">510</span>
+            <span class="text-xs text-slate-500 font-medium">triệu VNĐ</span>
+          </div>
+          <p class="text-xs text-emerald-700 bg-emerald-50 px-2 py-0.5 rounded font-medium inline-block">
+            <i class="fa-solid fa-file-invoice-dollar mr-1"></i> Trọn gói 05 nội dung
+          </p>
+        </div>
+
+        <!-- Metric 4: Tỷ lệ Hồ sơ CĐT đã cung cấp -->
+        <div class="bg-white p-5 rounded-2xl border border-slate-200/80 shadow-sm hover:shadow-md transition-shadow">
+          <div class="flex items-center justify-between mb-3">
+            <span class="text-xs font-semibold uppercase text-slate-400 tracking-wider">Dữ liệu CĐT</span>
+            <div class="w-8 h-8 rounded-lg bg-indigo-50 text-indigo-600 flex items-center justify-center text-sm">
+              <i class="fa-solid fa-file-shield"></i>
+            </div>
+          </div>
+          <div class="flex items-baseline gap-2 mb-2">
+            <span id="metric-docs-count" class="text-3xl font-extrabold text-slate-900">0/15</span>
+            <span class="text-xs text-slate-500 font-medium">tài liệu sẵn sàng</span>
+          </div>
+          <div class="w-full bg-slate-100 rounded-full h-2 overflow-hidden">
+            <div id="metric-docs-bar" class="bg-indigo-600 h-2 rounded-full transition-all duration-500" style="width: 0%"></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- 5 PACKAGES PROGRESS OVERVIEW -->
+      <div class="bg-white rounded-2xl border border-slate-200 p-6 shadow-sm">
+        <div class="flex flex-col sm:flex-row sm:items-center justify-between pb-4 mb-4 border-b border-slate-100 gap-2">
+          <div>
+            <h2 class="text-lg font-bold text-slate-900">Tiến độ chi tiết 05 Hạng mục Gói thầu</h2>
+            <p class="text-xs text-slate-500">Giám sát trạng thái thực tế từng nội dung theo quy định</p>
+          </div>
+          <button onclick="switchTab('packages')" class="text-xs text-sky-600 font-semibold hover:text-sky-700 flex items-center gap-1">
+            Xem hướng dẫn & bước tính chi tiết <i class="fa-solid fa-arrow-right"></i>
+          </button>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-4" id="packages-cards-container">
+          <!-- Will be rendered by JavaScript -->
+        </div>
+      </div>
+
+      <!-- CRITICAL ALERTS & COLLABORATION NOTICE -->
+      <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+        <!-- Critical Path Notification -->
+        <div class="lg:col-span-2 bg-gradient-to-br from-amber-50 to-orange-50 border border-amber-200/80 rounded-2xl p-5 shadow-sm">
+          <div class="flex items-start gap-3">
+            <div class="w-9 h-9 rounded-xl bg-amber-500 text-white flex items-center justify-center shrink-0 shadow-md shadow-amber-500/20">
+              <i class="fa-solid fa-triangle-exclamation"></i>
+            </div>
+            <div class="space-y-2">
+              <h3 class="text-sm font-bold text-amber-900">Lưu ý Đường găng Kỹ thuật (Critical Path)</h3>
+              <ul class="text-xs text-amber-800 space-y-1.5 list-disc list-inside">
+                <li><strong>Hạng mục 1 (Bản đồ ngập lụt)</strong> là tiền đề bắt buộc để hoàn thành <strong>Hạng mục 2 (Phương án ứng phó khẩn cấp EAP)</strong>. Cần ưu tiên chạy mô hình thủy lực HEC-RAS/MIKE ngay khi có số liệu địa hình lòng dẫn.</li>
+                <li><strong>Hạng mục 3 (Quy trình vận hành)</strong> cần khớp chặt chẽ với điều khoản Giấy phép khai thác nước mặt <strong>308/GP-BNNMT</strong>: xả dòng chảy tối thiểu đập chính $0,246\text{ m}^3\text{/s}$ qua ống D250 và các đập gom Chiron 1, 2, 4.</li>
+                <li><strong>Hạng mục 4 & 5 (Cắm mốc)</strong>: Cần CĐT bàn giao sớm trích lục địa chính khu đất công trình và bản đồ giải phóng mặt bằng lòng hồ để vạch tim tuyến mốc chính xác.</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+
+        <!-- Quick Summary Box -->
+        <div class="bg-slate-900 text-white rounded-2xl p-5 shadow-sm flex flex-col justify-between">
+          <div>
+            <div class="text-xs uppercase font-bold tracking-wider text-sky-400 mb-1">Đơn vị thẩm định</div>
+            <h4 class="text-base font-bold text-white mb-3">Sở Công Thương & Sở NN&MT TP Đà Nẵng</h4>
+            <p class="text-xs text-slate-300 leading-relaxed mb-4">
+              Dự án đã được Sở Công Thương thông báo kết quả thẩm định TKCS điều chỉnh (Văn bản số 5535/SCT-QLNL ngày 11/9/2026). Hiện trạng đập chính đạt >80%, nhà máy đạt >90%.
+            </p>
+          </div>
+          <div class="pt-3 border-t border-slate-800 flex items-center justify-between text-xs text-slate-400">
+            <span>Mã hồ sơ TTHC:</span>
+            <span class="font-mono text-sky-300">H17.03-260820-170104</span>
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- ================================================================= -->
+    <!-- TAB 2: THÔNG SỐ KỸ THUẬT & ĐIỀU CHỈNH THIẾT KẾ -->
+    <!-- ================================================================= -->
+    <div id="tab-technical" class="tab-pane hidden space-y-6">
+      
+      <!-- HEADER -->
+      <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4 bg-white p-6 rounded-2xl border border-slate-200">
+        <div>
+          <div class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-md text-xs font-semibold bg-sky-100 text-sky-800 mb-2">
+            <i class="fa-solid fa-file-lines"></i> Văn bản thẩm định số 5535/SCT-QLNL ngày 11/9/2026
+          </div>
+          <h2 class="text-xl font-extrabold text-slate-900">Thông số Kỹ thuật Nền tảng Dự án Thủy điện Trà Linh 1</h2>
+          <p class="text-xs sm:text-sm text-slate-500">Toàn bộ thông số cốt lõi sau hiệu chỉnh thiết kế cơ sở 2026 phục vụ tính toán các hạng mục vận hành</p>
+        </div>
+        <div class="flex items-center gap-2">
+          <span class="px-3 py-1.5 bg-emerald-50 text-emerald-700 border border-emerald-200 rounded-xl text-xs font-bold">
+            <i class="fa-solid fa-check-double mr-1"></i> Cấp công trình: CẤP II
+          </span>
+        </div>
+      </div>
+
+      <!-- GRID SPECIFICATIONS -->
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+        
+        <!-- CARD 1: THÔNG SỐ THỦY NĂNG & HỒ CHỨA -->
+        <div class="bg-white rounded-2xl border border-slate-200 p-5 shadow-sm space-y-4">
+          <div class="flex items-center gap-2.5 pb-3 border-b border-slate-100 text-sky-700">
+            <i class="fa-solid fa-water-ladder text-lg"></i>
+            <h3 class="font-bold text-slate-900 text-sm sm:text-base">Hồ Chứa & Thủy Năng</h3>
+          </div>
+          <div class="space-y-2 text-xs sm:text-sm">
+            <div class="flex justify-between py-1.5 border-b border-slate-50">
+              <span class="text-slate-500">Công suất lắp máy ($N_{lm}$)</span>
+              <span class="font-bold text-slate-900">29,6 MW (2 tổ máy)</span>
+            </div>
+            <div class="flex justify-between py-1.5 border-b border-slate-50">
+              <span class="text-slate-500">Điện lượng năm ($E_0$)</span>
+              <span class="font-bold text-slate-900">93,465 triệu kWh/năm</span>
+            </div>
+            <div class="flex justify-between py-1.5 border-b border-slate-50">
+              <span class="text-slate-500">Mực nước dâng bình thường (MNDBT)</span>
+              <span class="font-bold text-sky-600">1.167,00 m</span>
+            </div>
+            <div class="flex justify-between py-1.5 border-b border-slate-50">
+              <span class="text-slate-500">Mực nước chết (MNC)</span>
+              <span class="font-bold text-slate-900">1.150,00 m</span>
+            </div>
+            <div class="flex justify-between py-1.5 border-b border-slate-50">
+              <span class="text-slate-500">Dung tích toàn bộ ($V_{tb}$)</span>
+              <span class="font-bold text-slate-900">1,271 triệu m³</span>
+            </div>
+            <div class="flex justify-between py-1.5 border-b border-slate-50">
+              <span class="text-slate-500">Dung tích hữu ích ($V_{hi}$)</span>
+              <span class="font-bold text-slate-900">0,873 triệu m³</span>
+            </div>
+            <div class="flex justify-between py-1.5 border-b border-slate-50">
+              <span class="text-slate-500">Cột nước tính toán ($H_{tt}$)</span>
+              <span class="font-bold text-slate-900">416,0 m</span>
+            </div>
+            <div class="flex justify-between py-1.5">
+              <span class="text-slate-500">Lưu lượng lớn nhất qua tổ máy ($Q_{max}$)</span>
+              <span class="font-bold text-slate-900">8,27 m³/s</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- CARD 2: CỤM ĐẦU MỐI ĐẬP CHÍNH -->
+        <div class="bg-white rounded-2xl border border-slate-200 p-5 shadow-sm space-y-4">
+          <div class="flex items-center gap-2.5 pb-3 border-b border-slate-100 text-sky-700">
+            <i class="fa-solid fa-gem text-lg"></i>
+            <h3 class="font-bold text-slate-900 text-sm sm:text-base">Cụm Đầu Mối & Đập Chính</h3>
+          </div>
+          <div class="space-y-2 text-xs sm:text-sm">
+            <div class="flex justify-between py-1.5 border-b border-slate-50">
+              <span class="text-slate-500">Đập dâng bờ trái</span>
+              <span class="font-bold text-slate-900">BT trọng lực ($L=114,25\text{m}$, $H_{max}=52,5\text{m}$)</span>
+            </div>
+            <div class="flex justify-between py-1.5 border-b border-slate-50">
+              <span class="text-slate-500">Đập dâng bờ phải</span>
+              <span class="font-bold text-slate-900">BT trọng lực ($L=60,75\text{m}$, $H_{max}=38,12\text{m}$)</span>
+            </div>
+            <div class="flex justify-between py-1.5 border-b border-slate-50">
+              <span class="text-slate-500">Đập tràn xả lũ</span>
+              <span class="font-bold text-sky-600">Tràn tự do, $B=40\text{m}$, ngưỡng 1.167m</span>
+            </div>
+            <div class="flex justify-between py-1.5 border-b border-slate-50">
+              <span class="text-slate-500">Lưu lượng lũ thiết kế (P=1%)</span>
+              <span class="font-bold text-slate-900">631,0 m³/s ($Z_{tl}=1.170,85\text{m}$)</span>
+            </div>
+            <div class="flex justify-between py-1.5 border-b border-slate-50">
+              <span class="text-slate-500">Lưu lượng lũ kiểm tra (P=0,2%)</span>
+              <span class="font-bold text-red-600">851,0 m³/s ($Z_{tl}=1.171,65\text{m}$)</span>
+            </div>
+            <div class="flex justify-between py-1.5 border-b border-slate-50">
+              <span class="text-slate-500">Cống xả cát kết hợp dẫn dòng</span>
+              <span class="font-bold text-slate-900">$4,0 \times 5,0\text{m}$, cao trình 1.129,0m</span>
+            </div>
+            <div class="flex justify-between py-1.5">
+              <span class="text-slate-500">Ống xả dòng chảy tối thiểu</span>
+              <span class="font-bold text-emerald-600">D250 (Vào 1147m, Ra 1138m, Q=0,246 m³/s)</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- CARD 3: TUYẾN NĂNG LƯỢNG & NHÀ MÁY -->
+        <div class="bg-white rounded-2xl border border-slate-200 p-5 shadow-sm space-y-4">
+          <div class="flex items-center gap-2.5 pb-3 border-b border-slate-100 text-sky-700">
+            <i class="fa-solid fa-industry text-lg"></i>
+            <h3 class="font-bold text-slate-900 text-sm sm:text-base">Tuyến Năng Lượng & Nhà Máy</h3>
+          </div>
+          <div class="space-y-2 text-xs sm:text-sm">
+            <div class="flex justify-between py-1.5 border-b border-slate-50">
+              <span class="text-slate-500">Cửa nhận nước (CNN)</span>
+              <span class="font-bold text-slate-900">Hạ ngưỡng 4m xuống cao trình 1.146,0m</span>
+            </div>
+            <div class="flex justify-between py-1.5 border-b border-slate-50">
+              <span class="text-slate-500">Đường hầm dẫn nước</span>
+              <span class="font-bold text-slate-900">Chiều dài 3.923,26 m</span>
+            </div>
+            <div class="flex justify-between py-1.5 border-b border-slate-50">
+              <span class="text-slate-500">Tháp điều áp</span>
+              <span class="font-bold text-amber-600 font-mono">BỎ HOÀN TOÀN (Tua bin Pelton T=35s)</span>
+            </div>
+            <div class="flex justify-between py-1.5 border-b border-slate-50">
+              <span class="text-slate-500">Giếng đứng & hầm áp lực</span>
+              <span class="font-bold text-slate-900">Giếng 1: 170m; Giếng 2: 122m; Hầm: 798m</span>
+            </div>
+            <div class="flex justify-between py-1.5 border-b border-slate-50">
+              <span class="text-slate-500">Loại tuabin phát điện</span>
+              <span class="font-bold text-slate-900">Pelton trục đứng (Global Hydro)</span>
+            </div>
+            <div class="flex justify-between py-1.5 border-b border-slate-50">
+              <span class="text-slate-500">Kênh xả hạ lưu</span>
+              <span class="font-bold text-slate-900">Bề rộng đáy 13,3m; Đáy kênh 729,0m</span>
+            </div>
+            <div class="flex justify-between py-1.5">
+              <span class="text-slate-500">Thủy điện bậc thang hạ lưu</span>
+              <span class="font-bold text-slate-900">Trà Linh 2 (cách 500m), Trà Linh 3 (cách 5km)</span>
+            </div>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- TABLE: SO SÁNH TRƯỚC VÀ SAU ĐIỀU CHỈNH THIẾT KẾ CƠ SỞ -->
+      <div class="bg-white rounded-2xl border border-slate-200 overflow-hidden shadow-sm">
+        <div class="bg-slate-900 text-white p-4 sm:p-5 flex items-center justify-between">
+          <div>
+            <h3 class="text-base font-bold">Bảng So sánh & Lý giải Kỹ thuật Các Hạng mục Điều chỉnh</h3>
+            <p class="text-xs text-slate-300">Theo Báo cáo NCKT hiệu chỉnh và Văn bản thẩm định số 5535/SCT-QLNL</p>
+          </div>
+          <span class="text-xs bg-sky-500/20 text-sky-300 border border-sky-400/30 px-3 py-1 rounded-full font-medium">
+            <i class="fa-solid fa-scale-balanced mr-1"></i> Tối ưu & An toàn
+          </span>
+        </div>
+        <div class="overflow-x-auto">
+          <table class="w-full text-left text-xs sm:text-sm">
+            <thead class="bg-slate-50 text-slate-700 font-bold border-b border-slate-200 uppercase text-[11px] tracking-wider">
+              <tr>
+                <th class="p-3.5 sm:p-4">Hạng mục</th>
+                <th class="p-3.5 sm:p-4 text-slate-500">Thiết kế trước đây (2019)</th>
+                <th class="p-3.5 sm:p-4 text-sky-700">Thiết kế điều chỉnh (2026)</th>
+                <th class="p-3.5 sm:p-4 text-slate-600">Lý do kỹ thuật & Cơ sở pháp lý</th>
+              </tr>
+            </thead>
+            <tbody class="divide-y divide-slate-100">
+              <tr class="hover:bg-slate-50/80">
+                <td class="p-3.5 sm:p-4 font-bold text-slate-900">Đập dâng bờ trái</td>
+                <td class="p-3.5 sm:p-4 text-slate-600">Đập bê tông trọng lực kết hợp đập đất (L=121,5m)</td>
+                <td class="p-3.5 sm:p-4 font-semibold text-emerald-700">100% Đập bê tông trọng lực (L=114,25m)</td>
+                <td class="p-3.5 sm:p-4 text-xs text-slate-600">Khi bóc móng thực tế, nền địa chất đá lộ tốt hơn khảo sát ban đầu; làm đập bê tông toàn bộ giúp tăng độ ổn định, giảm nguy cơ thấm đập đất và giảm chiều dài đập.</td>
+              </tr>
+              <tr class="hover:bg-slate-50/80">
+                <td class="p-3.5 sm:p-4 font-bold text-slate-900">Tháp điều áp</td>
+                <td class="p-3.5 sm:p-4 text-slate-600">Bố trí tháp điều áp hở trên tuyến hầm</td>
+                <td class="p-3.5 sm:p-4 font-bold text-amber-600">BỎ HOÀN TOÀN THÁP ĐIỀU ÁP</td>
+                <td class="p-3.5 sm:p-4 text-xs text-slate-600">Khu vực tháp điều áp trước đây nằm trong khu nghĩa trang của người dân bản địa, khó GPMB. Tính toán thủy lực nước va (PL-TNL-04) khẳng định tuabin Pelton kéo dài thời gian đóng mở kim phun ($T=35\text{s}$) đảm bảo áp lực nước va an toàn và không xảy ra chân không trong hầm.</td>
+              </tr>
+              <tr class="hover:bg-slate-50/80">
+                <td class="p-3.5 sm:p-4 font-bold text-slate-900">Đập phụ & Đập gom Chiron 3</td>
+                <td class="p-3.5 sm:p-4 text-slate-600">Xây dựng đập phụ trên suối Nước Chua và Chiron 3 trên suối Nước Đoan</td>
+                <td class="p-3.5 sm:p-4 font-bold text-red-600">BỎ HOÀN TOÀN KHÔNG XÂY DỰNG</td>
+                <td class="p-3.5 sm:p-4 text-xs text-slate-600">Diện tích lưu vực rất nhỏ ($1,7\text{ km}^2$ và $0,98\text{ km}^2$), mùa kiệt không có nước. Bỏ 2 hạng mục này giúp giảm >10% diện tích chiếm đất rừng tự nhiên, tiết kiệm chi phí xây dựng giếng đứng và đường ống mà điện lượng giảm không đáng kể (<3%).</td>
+              </tr>
+              <tr class="hover:bg-slate-50/80">
+                <td class="p-3.5 sm:p-4 font-bold text-slate-900">Cửa nhận nước (CNN)</td>
+                <td class="p-3.5 sm:p-4 text-slate-600">Ngưỡng lấy nước tại cao trình 1.150,0m (ngang MNC)</td>
+                <td class="p-3.5 sm:p-4 font-semibold text-sky-700">Hạ cao trình ngưỡng xuống 1.146,0m (-4,0m)</td>
+                <td class="p-3.5 sm:p-4 text-xs text-slate-600">Tránh hiện tượng tạo phễu hút xoáy không khí và ngăn rác nổi, cây gỗ trôi vào hầm khi hồ vận hành ở mực nước chết (1.150m).</td>
+              </tr>
+              <tr class="hover:bg-slate-50/80">
+                <td class="p-3.5 sm:p-4 font-bold text-slate-900">Đập gom nước Chiron 4</td>
+                <td class="p-3.5 sm:p-4 text-slate-600">Đường ống thép hở dẫn nước về tháp điều áp</td>
+                <td class="p-3.5 sm:p-4 font-semibold text-sky-700">Cải tạo thành đường hầm ngầm dài 1.958,5m nối hầm chính</td>
+                <td class="p-3.5 sm:p-4 text-xs text-slate-600">Do bỏ tháp điều áp nên tuyến gom nước Chiron 4 đi ngầm hoàn toàn bằng hầm, đấu nối thẳng vào hầm chính, giảm thiểu xâm hại thảm thực vật rừng trên sườn núi.</td>
+              </tr>
+              <tr class="hover:bg-slate-50/80">
+                <td class="p-3.5 sm:p-4 font-bold text-slate-900">Đập gom Chiron 1 & Chiron 2</td>
+                <td class="p-3.5 sm:p-4 text-slate-600">Đường ống dẫn nước kết hợp</td>
+                <td class="p-3.5 sm:p-4 font-semibold text-sky-700">Làm đường ống thép độc lập dẫn xả bổ sung về hồ chính</td>
+                <td class="p-3.5 sm:p-4 text-xs text-slate-600">Đơn giản hóa hệ thống gom nước, xả trực tiếp vào hồ chứa tại vị trí đập dâng bờ phải để tăng tính chủ động điều tiết nước phát điện.</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- ================================================================= -->
+    <!-- TAB 3: 5 HẠNG MỤC GÓI THẦU (CHI TIẾT BƯỚC TÍNH & DỮ LIỆU) -->
+    <!-- ================================================================= -->
+    <div id="tab-packages" class="tab-pane hidden space-y-6">
+      
+      <div class="bg-white p-6 rounded-2xl border border-slate-200">
+        <h2 class="text-xl font-extrabold text-slate-900 mb-1">Hướng Dẫn Kỹ Thuật, Các Bước Tính Toán & Yêu Cầu Dữ Liệu Từng Hạng Mục</h2>
+        <p class="text-xs sm:text-sm text-slate-500">Tài liệu chi tiết hướng dẫn phương pháp luận, công thức, phần mềm áp dụng để các kỹ sư phối hợp triển khai</p>
+      </div>
+
+      <!-- ACCORDION / CARDS OF 5 PACKAGES -->
+      <div class="space-y-6" id="packages-detail-list">
+        <!-- Rendered by JavaScript for rich details -->
+      </div>
+
+    </div>
+
+    <!-- ================================================================= -->
+    <!-- TAB 4: HỒ SƠ & DỮ LIỆU CĐT (CHECK-LIST TƯƠNG TÁC) -->
+    <!-- ================================================================= -->
+    <div id="tab-data" class="tab-pane hidden space-y-6">
+      
+      <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4 bg-white p-6 rounded-2xl border border-slate-200">
+        <div>
+          <h2 class="text-xl font-extrabold text-slate-900">Danh Mục Hồ Sơ & Dữ Liệu Yêu Cầu CĐT Cung Cấp</h2>
+          <p class="text-xs sm:text-sm text-slate-500">Phân định rõ tài liệu Tư vấn đã có trong kho dữ liệu và danh mục CĐT cần bàn giao bổ sung</p>
+        </div>
+        <div class="flex flex-wrap items-center gap-2">
+          <button onclick="filterDocs('all')" class="doc-filter-btn px-3 py-1.5 rounded-lg text-xs font-semibold bg-sky-600 text-white">Tất cả (15)</button>
+          <button onclick="filterDocs('needed')" class="doc-filter-btn px-3 py-1.5 rounded-lg text-xs font-semibold bg-slate-100 text-slate-600 hover:bg-slate-200">Cần CĐT bổ sung</button>
+          <button onclick="filterDocs('received')" class="doc-filter-btn px-3 py-1.5 rounded-lg text-xs font-semibold bg-slate-100 text-slate-600 hover:bg-slate-200">Đã có / Đã nhận</button>
+        </div>
+      </div>
+
+      <!-- DOCUMENT TABLE -->
+      <div class="bg-white rounded-2xl border border-slate-200 overflow-hidden shadow-sm">
+        <div class="overflow-x-auto">
+          <table class="w-full text-left text-xs sm:text-sm">
+            <thead class="bg-slate-900 text-white uppercase text-[11px] font-bold tracking-wider">
+              <tr>
+                <th class="p-3.5 text-center w-12">TT</th>
+                <th class="p-3.5 w-64">Tên tài liệu / Hồ sơ</th>
+                <th class="p-3.5 w-60">Mục đích sử dụng</th>
+                <th class="p-3.5 w-44">Tình trạng kho Tư vấn</th>
+                <th class="p-3.5">Nội dung đề nghị CĐT cung cấp / Xác nhận</th>
+                <th class="p-3.5 text-center w-28">Hạn cần</th>
+                <th class="p-3.5 text-center w-36">Trạng thái</th>
+              </tr>
+            </thead>
+            <tbody id="docs-table-body" class="divide-y divide-slate-100">
+              <!-- Rendered by JavaScript -->
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <div class="bg-sky-50 border border-sky-200 rounded-xl p-4 text-xs text-sky-800 flex items-center justify-between">
+        <div class="flex items-center gap-2">
+          <i class="fa-solid fa-circle-info text-sky-600 text-base"></i>
+          <span>Bạn có thể click vào nút Trạng thái để chuyển đổi: <strong>Chưa nhận $\rightarrow$ Đang xử lý $\rightarrow$ Đã nhận</strong>. Dữ liệu sẽ tự động lưu vào trình duyệt của bạn!</span>
+        </div>
+        <button onclick="resetDocsState()" class="text-xs text-sky-700 hover:text-sky-900 underline font-semibold shrink-0">Reset trạng thái</button>
+      </div>
+
+    </div>
+
+    <!-- ================================================================= -->
+    <!-- TAB 5: QUẢN LÝ CÔNG VIỆC & PHÂN CÔNG (TASK BOARD) -->
+    <!-- ================================================================= -->
+    <div id="tab-tasks" class="tab-pane hidden space-y-6">
+      
+      <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4 bg-white p-6 rounded-2xl border border-slate-200">
+        <div>
+          <h2 class="text-xl font-extrabold text-slate-900">Quản Lý Công Việc & Phân Công Đồng Nghiệp (WBS)</h2>
+          <p class="text-xs sm:text-sm text-slate-500">Phân rã toàn bộ quy trình thực hiện 05 hạng mục thành các đầu việc cụ thể để theo dõi</p>
+        </div>
+        <div class="flex flex-wrap items-center gap-2">
+          <button onclick="openAddTaskModal()" class="px-3 py-2 bg-sky-600 hover:bg-sky-700 text-white rounded-xl text-xs font-bold flex items-center gap-1.5 shadow-sm">
+            <i class="fa-solid fa-plus"></i> Thêm công việc
+          </button>
+          <div class="relative">
+            <select id="task-filter-package" onchange="filterTasks()" class="text-xs border border-slate-200 rounded-xl px-3 py-2 bg-slate-50 text-slate-700 font-medium focus:outline-none focus:ring-2 focus:ring-sky-500">
+              <option value="all">Tất cả Hạng mục</option>
+              <option value="1">1. Bản đồ ngập lụt</option>
+              <option value="2">2. Phương án EAP</option>
+              <option value="3">3. Quy trình vận hành</option>
+              <option value="4">4. Mốc bảo vệ đập</option>
+              <option value="5">5. Mốc nguồn nước</option>
+            </select>
+          </div>
+          <div class="relative">
+            <select id="task-filter-status" onchange="filterTasks()" class="text-xs border border-slate-200 rounded-xl px-3 py-2 bg-slate-50 text-slate-700 font-medium focus:outline-none focus:ring-2 focus:ring-sky-500">
+              <option value="all">Tất cả Trạng thái</option>
+              <option value="todo">Chưa làm</option>
+              <option value="in_progress">Đang thực hiện</option>
+              <option value="review">Đang thẩm định / Rà soát</option>
+              <option value="done">Hoàn thành</option>
+            </select>
+          </div>
+        </div>
+      </div>
+
+      <!-- TASK STATS STRIP -->
+      <div class="grid grid-cols-2 sm:grid-cols-4 gap-4">
+        <div class="bg-white p-4 rounded-xl border border-slate-200 flex items-center gap-3">
+          <div class="w-10 h-10 rounded-lg bg-slate-100 text-slate-600 flex items-center justify-center font-bold">
+            <i class="fa-solid fa-list-ul"></i>
+          </div>
+          <div>
+            <div id="stat-tasks-total" class="text-xl font-bold text-slate-900">0</div>
+            <div class="text-xs text-slate-500 font-medium">Tổng đầu việc</div>
+          </div>
+        </div>
+        <div class="bg-white p-4 rounded-xl border border-slate-200 flex items-center gap-3">
+          <div class="w-10 h-10 rounded-lg bg-amber-50 text-amber-600 flex items-center justify-center font-bold">
+            <i class="fa-solid fa-spinner animate-spin"></i>
+          </div>
+          <div>
+            <div id="stat-tasks-inprogress" class="text-xl font-bold text-amber-600">0</div>
+            <div class="text-xs text-slate-500 font-medium">Đang thực hiện</div>
+          </div>
+        </div>
+        <div class="bg-white p-4 rounded-xl border border-slate-200 flex items-center gap-3">
+          <div class="w-10 h-10 rounded-lg bg-indigo-50 text-indigo-600 flex items-center justify-center font-bold">
+            <i class="fa-solid fa-magnifying-glass"></i>
+          </div>
+          <div>
+            <div id="stat-tasks-review" class="text-xl font-bold text-indigo-600">0</div>
+            <div class="text-xs text-slate-500 font-medium">Chờ duyệt / Thẩm định</div>
+          </div>
+        </div>
+        <div class="bg-white p-4 rounded-xl border border-slate-200 flex items-center gap-3">
+          <div class="w-10 h-10 rounded-lg bg-emerald-50 text-emerald-600 flex items-center justify-center font-bold">
+            <i class="fa-solid fa-circle-check"></i>
+          </div>
+          <div>
+            <div id="stat-tasks-done" class="text-xl font-bold text-emerald-600">0</div>
+            <div class="text-xs text-slate-500 font-medium">Đã hoàn thành</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- TASK LIST VIEW -->
+      <div class="bg-white rounded-2xl border border-slate-200 shadow-sm overflow-hidden">
+        <div class="divide-y divide-slate-100" id="tasks-container">
+          <!-- Rendered by JavaScript -->
+        </div>
+      </div>
+
+    </div>
+
+    <!-- ================================================================= -->
+    <!-- TAB 6: TIẾN ĐỘ 60 NGÀY (GANTT & TIMELINE) -->
+    <!-- ================================================================= -->
+    <div id="tab-timeline" class="tab-pane hidden space-y-6">
+      
+      <div class="bg-white p-6 rounded-2xl border border-slate-200">
+        <h2 class="text-xl font-extrabold text-slate-900 mb-1">Kế Hoạch & Tiến Độ Tổng Thể (Timeline 60 Ngày)</h2>
+        <p class="text-xs sm:text-sm text-slate-500">Phân kỳ 8 tuần công tác thực hiện gối đầu và song song 05 hạng mục</p>
+      </div>
+
+      <!-- VISUAL TIMELINE / GANTT -->
+      <div class="bg-white rounded-2xl border border-slate-200 p-6 shadow-sm space-y-6">
+        
+        <!-- WEEK COLUMNS HEADER -->
+        <div class="grid grid-cols-8 gap-2 text-center text-xs font-bold text-slate-500 border-b border-slate-200 pb-3">
+          <div>Tuần 1<br><span class="text-[10px] font-normal text-slate-400">N1-N7</span></div>
+          <div>Tuần 2<br><span class="text-[10px] font-normal text-slate-400">N8-N15</span></div>
+          <div>Tuần 3<br><span class="text-[10px] font-normal text-slate-400">N16-N22</span></div>
+          <div>Tuần 4<br><span class="text-[10px] font-normal text-slate-400">N23-N30</span></div>
+          <div>Tuần 5<br><span class="text-[10px] font-normal text-slate-400">N31-N37</span></div>
+          <div>Tuần 6<br><span class="text-[10px] font-normal text-slate-400">N38-N45</span></div>
+          <div>Tuần 7<br><span class="text-[10px] font-normal text-slate-400">N46-N52</span></div>
+          <div>Tuần 8<br><span class="text-[10px] font-normal text-slate-400">N53-N60</span></div>
+        </div>
+
+        <!-- BARS -->
+        <div class="space-y-4 text-xs">
+          <!-- Gói 1 -->
+          <div>
+            <div class="flex justify-between font-bold text-slate-800 mb-1">
+              <span>1. Lập bản đồ ngập lụt hạ du đập (45 ngày)</span>
+              <span class="text-sky-600 font-semibold">Tuần 1 - Tuần 6</span>
+            </div>
+            <div class="grid grid-cols-8 gap-2 h-7 bg-slate-50 rounded-lg p-1">
+              <div class="col-span-6 bg-gradient-to-r from-sky-500 to-blue-600 rounded-md text-white flex items-center px-2 text-[11px] font-medium shadow-sm">
+                Thu thập địa hình $\rightarrow$ Mô hình HEC-RAS/MIKE $\rightarrow$ Biên tập bản đồ
+              </div>
+            </div>
+          </div>
+
+          <!-- Gói 2 -->
+          <div>
+            <div class="flex justify-between font-bold text-slate-800 mb-1">
+              <span>2. Phương án ứng phó khẩn cấp hạ du đập EAP (15 ngày)</span>
+              <span class="text-amber-600 font-semibold">Tuần 5 - Tuần 6</span>
+            </div>
+            <div class="grid grid-cols-8 gap-2 h-7 bg-slate-50 rounded-lg p-1">
+              <div class="col-start-5 col-span-2 bg-gradient-to-r from-amber-500 to-orange-500 rounded-md text-white flex items-center px-2 text-[11px] font-medium shadow-sm">
+                Lập EAP $\rightarrow$ Tham vấn xã
+              </div>
+            </div>
+          </div>
+
+          <!-- Gói 3 -->
+          <div>
+            <div class="flex justify-between font-bold text-slate-800 mb-1">
+              <span>3. Quy trình vận hành hồ thủy điện (30 ngày)</span>
+              <span class="text-emerald-600 font-semibold">Tuần 2 - Tuần 5</span>
+            </div>
+            <div class="grid grid-cols-8 gap-2 h-7 bg-slate-50 rounded-lg p-1">
+              <div class="col-start-2 col-span-4 bg-gradient-to-r from-emerald-500 to-teal-600 rounded-md text-white flex items-center px-2 text-[11px] font-medium shadow-sm">
+                Tính toán điều tiết hồ $\rightarrow$ Soạn quy trình $\rightarrow$ Lấy ý kiến liên hồ
+              </div>
+            </div>
+          </div>
+
+          <!-- Gói 4 -->
+          <div>
+            <div class="flex justify-between font-bold text-slate-800 mb-1">
+              <span>4. Lập phương án cắm mốc bảo vệ đập thủy điện (30 ngày)</span>
+              <span class="text-indigo-600 font-semibold">Tuần 2 - Tuần 5</span>
+            </div>
+            <div class="grid grid-cols-8 gap-2 h-7 bg-slate-50 rounded-lg p-1">
+              <div class="col-start-2 col-span-4 bg-gradient-to-r from-indigo-500 to-purple-600 rounded-md text-white flex items-center px-2 text-[11px] font-medium shadow-sm">
+                Khảo sát tim mốc $\rightarrow$ Thiết kế mốc $\rightarrow$ Bảng tọa độ VN-2000
+              </div>
+            </div>
+          </div>
+
+          <!-- Gói 5 -->
+          <div>
+            <div class="flex justify-between font-bold text-slate-800 mb-1">
+              <span>5. Lập phương án cắm mốc hành lang nguồn nước hồ chứa (30 ngày)</span>
+              <span class="text-rose-600 font-semibold">Tuần 3 - Tuần 6</span>
+            </div>
+            <div class="grid grid-cols-8 gap-2 h-7 bg-slate-50 rounded-lg p-1">
+              <div class="col-start-3 col-span-4 bg-gradient-to-r from-rose-500 to-pink-600 rounded-md text-white flex items-center px-2 text-[11px] font-medium shadow-sm">
+                Đường viền MNDBT 1167m $\rightarrow$ Vạch tuyến mốc $\rightarrow$ Hồ sơ cắm mốc
+              </div>
+            </div>
+          </div>
+
+          <!-- Giai đoạn Thẩm định & Phê duyệt -->
+          <div>
+            <div class="flex justify-between font-bold text-slate-800 mb-1">
+              <span>Giai đoạn Hoàn thiện, In ấn, Trình nộp Thẩm định & Phê duyệt</span>
+              <span class="text-slate-900 font-semibold">Tuần 7 - Tuần 8</span>
+            </div>
+            <div class="grid grid-cols-8 gap-2 h-7 bg-slate-50 rounded-lg p-1">
+              <div class="col-start-7 col-span-2 bg-gradient-to-r from-slate-800 to-slate-950 rounded-md text-white flex items-center px-2 text-[11px] font-medium shadow-sm">
+                Đóng dấu CĐT $\rightarrow$ Nộp Sở Công Thương / Sở NN&MT $\rightarrow$ Phê duyệt
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- DETAILED STAGES DESCRIPTION -->
+      <div class="grid grid-cols-1 md:grid-cols-4 gap-4 text-xs">
+        <div class="bg-white p-4 rounded-xl border border-slate-200 shadow-sm space-y-2">
+          <div class="font-bold text-sky-700 text-sm flex items-center gap-1.5">
+            <span class="w-5 h-5 rounded-full bg-sky-100 text-sky-700 flex items-center justify-center text-xs">1</span>
+            Giai đoạn Thu thập & Khảo sát
+          </div>
+          <div class="text-slate-500">Tuần 1 - Tuần 2</div>
+          <p class="text-slate-600 leading-relaxed">CĐT bàn giao dữ liệu; Tổ tư vấn khảo sát thực địa suối Nước Nô, đập chính, lòng hồ và các công trình hạ du.</p>
+        </div>
+        <div class="bg-white p-4 rounded-xl border border-slate-200 shadow-sm space-y-2">
+          <div class="font-bold text-emerald-700 text-sm flex items-center gap-1.5">
+            <span class="w-5 h-5 rounded-full bg-emerald-100 text-emerald-700 flex items-center justify-center text-xs">2</span>
+            Giai đoạn Mô phỏng & Soạn thảo
+          </div>
+          <div class="text-slate-500">Tuần 3 - Tuần 4</div>
+          <p class="text-slate-600 leading-relaxed">Chạy mô hình thủy lực HEC-RAS; mô phỏng điều tiết hồ chứa; thiết kế hệ thống mốc VN-2000 và soạn thảo 05 bộ hồ sơ.</p>
+        </div>
+        <div class="bg-white p-4 rounded-xl border border-slate-200 shadow-sm space-y-2">
+          <div class="font-bold text-amber-700 text-sm flex items-center gap-1.5">
+            <span class="w-5 h-5 rounded-full bg-amber-100 text-amber-700 flex items-center justify-center text-xs">3</span>
+            Giai đoạn Lấy ý kiến & Rà soát
+          </div>
+          <div class="text-slate-500">Tuần 5 - Tuần 6</div>
+          <p class="text-slate-600 leading-relaxed">Gửi CĐT rà soát nội bộ; gửi công văn xin ý kiến tham vấn UBND xã Trà Linh, Trà Tập và thủy điện bậc thang Trà Linh 2.</p>
+        </div>
+        <div class="bg-white p-4 rounded-xl border border-slate-200 shadow-sm space-y-2">
+          <div class="font-bold text-indigo-700 text-sm flex items-center gap-1.5">
+            <span class="w-5 h-5 rounded-full bg-indigo-100 text-indigo-700 flex items-center justify-center text-xs">4</span>
+            Giai đoạn Trình duyệt & Phê duyệt
+          </div>
+          <div class="text-slate-500">Tuần 7 - Tuần 8</div>
+          <p class="text-slate-600 leading-relaxed">CĐT ký nộp tờ trình chính thức lên Sở Công Thương, Sở NN&MT; giải trình hội đồng và nhận Quyết định phê duyệt.</p>
+        </div>
+      </div>
+
+    </div>
+
+  </main>
+
+  <!-- ADD TASK MODAL -->
+  <div id="modal-add-task" class="fixed inset-0 bg-slate-900/60 backdrop-blur-sm z-50 hidden flex items-center justify-center p-4">
+    <div class="bg-white rounded-2xl max-w-md w-full p-6 shadow-2xl space-y-4">
+      <div class="flex items-center justify-between pb-3 border-b border-slate-100">
+        <h3 class="font-bold text-slate-900 text-base">Thêm Công Việc Mới</h3>
+        <button onclick="closeAddTaskModal()" class="text-slate-400 hover:text-slate-600">
+          <i class="fa-solid fa-xmark text-lg"></i>
+        </button>
+      </div>
+      <div class="space-y-3 text-xs sm:text-sm">
+        <div>
+          <label class="block text-slate-700 font-semibold mb-1">Tên công việc</label>
+          <input type="text" id="new-task-title" placeholder="VD: Khảo sát lòng dẫn hạ du suối Nước Nô..." class="w-full border border-slate-200 rounded-xl px-3 py-2 focus:ring-2 focus:ring-sky-500 outline-none">
+        </div>
+        <div>
+          <label class="block text-slate-700 font-semibold mb-1">Thuộc Hạng mục</label>
+          <select id="new-task-package" class="w-full border border-slate-200 rounded-xl px-3 py-2 focus:ring-2 focus:ring-sky-500 outline-none">
+            <option value="1">1. Bản đồ ngập lụt hạ du đập</option>
+            <option value="2">2. Phương án ứng phó khẩn cấp EAP</option>
+            <option value="3">3. Quy trình vận hành hồ thủy điện</option>
+            <option value="4">4. Phương án cắm mốc bảo vệ đập</option>
+            <option value="5">5. Phương án cắm mốc hành lang nguồn nước</option>
+          </select>
+        </div>
+        <div class="grid grid-cols-2 gap-3">
+          <div>
+            <label class="block text-slate-700 font-semibold mb-1">Người phụ trách</label>
+            <input type="text" id="new-task-assignee" placeholder="Kỹ sư Thủy lực..." class="w-full border border-slate-200 rounded-xl px-3 py-2 focus:ring-2 focus:ring-sky-500 outline-none">
+          </div>
+          <div>
+            <label class="block text-slate-700 font-semibold mb-1">Hạn hoàn thành</label>
+            <input type="text" id="new-task-deadline" placeholder="Ngày thứ 15..." class="w-full border border-slate-200 rounded-xl px-3 py-2 focus:ring-2 focus:ring-sky-500 outline-none">
+          </div>
+        </div>
+        <div>
+          <label class="block text-slate-700 font-semibold mb-1">Độ ưu tiên</label>
+          <select id="new-task-priority" class="w-full border border-slate-200 rounded-xl px-3 py-2 focus:ring-2 focus:ring-sky-500 outline-none">
+            <option value="Cao">Cao (Đường găng)</option>
+            <option value="Trung bình" selected>Trung bình</option>
+            <option value="Thấp">Thấp</option>
+          </select>
+        </div>
+      </div>
+      <div class="pt-3 border-t border-slate-100 flex items-center justify-end gap-2">
+        <button onclick="closeAddTaskModal()" class="px-4 py-2 border border-slate-200 rounded-xl text-xs font-semibold text-slate-600 hover:bg-slate-50">Hủy</button>
+        <button onclick="saveNewTask()" class="px-4 py-2 bg-sky-600 hover:bg-sky-700 text-white rounded-xl text-xs font-bold">Lưu công việc</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- FOOTER -->
+  <footer class="bg-white border-t border-slate-200 py-6 text-center text-xs text-slate-500 no-print mt-auto">
+    <div class="max-w-7xl mx-auto px-4 flex flex-col sm:flex-row items-center justify-between gap-2">
+      <div>
+        <span class="font-bold text-slate-700">Dự án Thủy điện Trà Linh 1 (29,6 MW)</span> • Hồ sơ Quản lý Gói thầu Vận hành
+      </div>
+      <div class="flex items-center gap-3">
+        <button onclick="exportDataJSON()" class="text-sky-600 hover:underline">Sao lưu dữ liệu (Backup)</button>
+        <span>•</span>
+        <button onclick="resetAllData()" class="text-red-500 hover:underline">Reset toàn bộ dữ liệu</button>
+      </div>
+    </div>
+  </footer>
+
+  <!-- SCRIPT LOGIC (SINGLE PAGE APPLICATION) -->
+  <script>
+    // INITIAL DATA DEFINITIONS
+    const DEFAULT_PACKAGES = [
+      {
+        id: 1,
+        title: "Lập bản đồ ngập lụt hạ du đập",
+        duration: "45 ngày",
+        cost: "66.000.000 VNĐ",
+        authority: "Sở Công Thương thẩm định, UBND TP phê duyệt",
+        legal: "Điều 19, Điều 27 Nghị định 114/2018/NĐ-CP; Thông tư 05/2019/TT-BCT",
+        icon: "fa-water",
+        color: "sky",
+        desc: "Mô phỏng thủy lực xác định phạm vi ngập, độ sâu ngập, lưu tốc và thời gian lan truyền sóng lũ từ chân đập suối Nước Nô đến hồ Trà Linh 2 và Trà Linh 3 phục vụ công tác cảnh báo, cứu nạn.",
+        software: "HEC-RAS 6.x (1D/2D) hoặc MIKE FLOOD (DHI)",
+        steps: [
+          { step: "Bước 1", name: "Thu thập số liệu thủy văn, lòng dẫn & đặc tính xả lũ", detail: "Thu thập tài liệu thủy văn thiết kế (P=1% Q=631 m3/s, P=0,2% Q=851 m3/s), đường cong Z-V-F hồ chứa, đường cong xả tràn tự do B=40m, cống xả cát 4x5m và bình đồ số suối Nước Nô." },
+          { step: "Bước 2", name: "Khảo sát thực địa lòng dẫn hạ du & điểm xung yếu", detail: "Đo đạc bổ sung mặt cắt suối Nước Nô từ sau đập chính (4,2km) đến đập Thủy điện Trà Linh 2; khảo sát vị trí cầu ngầm, ngầm tràn, nhà cửa dân cư dọc 2 bờ suối." },
+          { step: "Bước 3", name: "Thiết lập mô hình thủy lực 1D/2D & Chạy 4 kịch bản", detail: "Xây dựng lưới tính toán 2D mesh, gán hệ số nhám Manning (lòng dẫn 0.045, bờ cây bụi 0.08). Mô phỏng 4 kịch bản: (i) Lũ thiết kế P=1%; (ii) Lũ kiểm tra P=0,2%; (iii) Lũ bất thường; (iv) Sự cố vỡ đập giả định theo mô hình Froehlich." },
+          { step: "Bước 4", name: "Biên tập bản đồ ngập lụt & Trích xuất kết quả", detail: "Số hóa lớp ngập lụt trên nền bản đồ địa hình/GIS, thể hiện cao trình đỉnh lũ, độ sâu ngập cực đại, lưu tốc và thời gian sóng lũ truyền đến từng khu dân cư." },
+          { step: "Bước 5", name: "Lập báo cáo thuyết minh & Trình thẩm định, phê duyệt", detail: "Hoàn thiện thuyết minh tính toán, bản đồ tỷ lệ 1/5.000 - 1/10.000, lấy ý kiến CĐT và nộp Sở Công Thương TP Đà Nẵng thẩm định, UBND TP phê duyệt." }
+        ],
+        requiredDocs: [
+          "Bình đồ địa hình hạ du suối Nước Nô (file CAD) từ chân đập đến đập Trà Linh 2",
+          "Bản vẽ hoàn công đập tràn tự do (B=40m, ngưỡng 1167m) và cống xả cát (4x5m)",
+          "Đường cong quan hệ dung tích hồ Z - V - F",
+          "Thông số cao trình đỉnh đập, MNDBT, MNC của Thủy điện Trà Linh 2 (bậc thang hạ du)"
+        ]
+      },
+      {
+        id: 2,
+        title: "Phương án ứng phó tình huống khẩn cấp (EAP)",
+        duration: "15 ngày",
+        cost: "60.000.000 VNĐ",
+        authority: "Sở Công Thương thẩm định, UBND TP phê duyệt",
+        legal: "Điều 26, Điều 27 Nghị định 114/2018/NĐ-CP; Luật Phòng chống thiên tai",
+        icon: "fa-bullhorn",
+        color: "amber",
+        desc: "Kế hoạch hành động cụ thể khi đập gặp tình huống nguy hiểm hoặc sự cố vỡ đập, quy định rõ trách nhiệm thông báo, sơ tán dân hạ du và cơ chế phối hợp theo phương châm 4 tại chỗ.",
+        software: "QGIS / ArcGIS & Phân tích ma trận rủi ro thiên tai",
+        steps: [
+          { step: "Bước 1", name: "Tiếp nhận kết quả phân vùng rủi ro từ Bản đồ ngập lụt", detail: "Xác định chính xác các điểm dân cư, cơ sở hạ tầng, trường học, trạm y tế hạ du nằm trong vùng ngập lụt theo từng kịch bản." },
+          { step: "Bước 2", name: "Thống kê dân sinh & Xác định địa điểm sơ tán an toàn", detail: "Phối hợp với UBND xã Trà Linh và Trà Tập thống kê số hộ dân, nhân khẩu; vạch tuyến đường sơ tán cao ráo, chọn điểm tập kết tránh lũ an toàn." },
+          { step: "Bước 3", name: "Thiết lập quy trình thông báo, báo động & Cảnh báo sớm", detail: "Xây dựng sơ đồ thông báo khẩn cấp từ Trưởng ca vận hành $\rightarrow$ Trưởng Ban chỉ huy PCTT Nhà máy $\rightarrow$ Ban chỉ huy PCTT địa phương; quy định tín hiệu còi hú, loa phóng thanh." },
+          { step: "Bước 4", name: "Lập phương án hậu cần, vật tư & Cứu hộ '4 tại chỗ'", detail: "Bố trí phương tiện di chuyển, xuồng cứu sinh, áo phao, thiết bị liên lạc vô tuyến, lương thực thực phẩm dự phòng tại nhà máy và các trạm." },
+          { step: "Bước 5", name: "Tham vấn cộng đồng & Hoàn thiện hồ sơ trình phê duyệt", detail: "Lấy ý kiến chính quyền xã Trà Linh, Trà Tập, huyện Nam Trà My; hoàn chỉnh hồ sơ trình Sở Công Thương thẩm định, UBND TP phê duyệt." }
+        ],
+        requiredDocs: [
+          "Kết quả Bản đồ ngập lụt hạ du đập (Hạng mục 1)",
+          "Quyết định thành lập & Danh bạ Ban chỉ huy PCTT&TKCN Thủy điện Trà Linh 1",
+          "Thông tin đầu mối PCTT của xã Trà Linh, Trà Tập và huyện Nam Trà My",
+          "Sơ đồ hệ thống loa cảnh báo xả lũ hạ du và camera giám sát đã lắp đặt"
+        ]
+      },
+      {
+        id: 3,
+        title: "Quy trình vận hành hồ thủy điện",
+        duration: "30 ngày",
+        cost: "90.000.000 VNĐ",
+        authority: "Sở Công Thương / Bộ Công Thương thẩm định, phê duyệt",
+        legal: "Nghị định 114/2018/NĐ-CP; Luật TNN 2023; Giấy phép 308/GP-BNNMT; QĐ 1861/QĐ-TTg",
+        icon: "fa-sliders",
+        color: "emerald",
+        desc: "Quy định nguyên tắc tích nước, điều tiết xả lũ, phát điện giờ cao điểm mùa kiệt, cam kết duy trì dòng chảy tối thiểu sau đập chính và các đập gom nước.",
+        software: "Mô hình tính toán cân bằng nước & Điều tiết hồ chứa thủy điện",
+        steps: [
+          { step: "Bước 1", name: "Chuẩn xác thông số hồ chứa & Thiết bị công trình xả", detail: "Cập nhật đường cong dung tích hồ (MNDBT 1167m, MNC 1150m), khả năng xả tràn tự do, quy trình đóng mở cống xả cát và thông số 2 tổ máy Pelton (Qmax=8,27 m3/s)." },
+          { step: "Bước 2", name: "Xây dựng quy tắc vận hành mùa lũ & Cắt giảm lũ", detail: "Quy định cao trình đón lũ, chế độ xả lũ, vận hành cống xả cát để hạ mực nước hồ và chống bồi lắng; phối hợp điều tiết với hồ Trà Linh 2 nằm ngay hạ lưu." },
+          { step: "Bước 3", name: "Xây dựng quy tắc mùa kiệt & Xả dòng chảy tối thiểu", detail: "Quy định giờ phát điện cao điểm; cam kết xả dòng chảy môi trường qua ống D250 sau đập chính $Q_{tt} \ge 0,246\text{ m}^3\text{/s}$ và các đập gom Chiron 1 ($0,024\text{ m}^3\text{/s}$), Chiron 2 ($0,026\text{ m}^3\text{/s}$), Chiron 4 ($0,087\text{ m}^3\text{/s}$)." },
+          { step: "Bước 4", name: "Quy định quan trắc, giám sát & Truyền số liệu trực tuyến", detail: "Quy chuẩn đo mực nước hồ, lưu lượng xả, đo mưa và kết nối dữ liệu tự động về Cục QL Tài nguyên nước và Sở Công Thương TP Đà Nẵng." },
+          { step: "Bước 5", name: "Tham vấn bậc thang & Trình cơ quan quản lý phê duyệt", detail: "Lấy ý kiến Thủy điện Trà Linh 2, Trà Linh 3 và các cơ quan địa phương; hoàn thiện trình cấp có thẩm quyền ban hành quyết định phê duyệt." }
+        ],
+        requiredDocs: [
+          "Đặc tính kỹ thuật tổ máy tuabin Pelton (Global Hydro) & đường cong hiệu suất",
+          "Bảng tra quan hệ mực nước - dung tích - diện tích hồ Z - V - F",
+          "Thông số kỹ thuật van điều tiết ống xả dòng chảy tối thiểu D250 đập chính",
+          "Hồ sơ thiết bị quan trắc mực nước, lưu lượng và camera đã lắp đặt"
+        ]
+      },
+      {
+        id: 4,
+        title: "Phương án cắm mốc chỉ giới phạm vi bảo vệ đập",
+        duration: "30 ngày",
+        cost: "144.000.000 VNĐ",
+        authority: "Sở Công Thương thẩm định, UBND TP phê duyệt",
+        legal: "Điều 23 Nghị định 114/2018/NĐ-CP; Điều 40 Luật Thủy lợi",
+        icon: "fa-map-pin",
+        color: "indigo",
+        desc: "Xác định ranh giới vùng phụ cận bảo vệ đập cấp II (thượng, hạ lưu và 2 vai đập), tuyến hầm, nhà máy; thiết kế hệ thống mốc bê tông cốt thép ngoài thực địa.",
+        software: "AutoCAD Civil 3D & Máy đo GPS RTK VN-2000",
+        steps: [
+          { step: "Bước 1", name: "Xác định hành lang bảo vệ đập cấp II theo quy chuẩn", detail: "Áp dụng Điều 23 NĐ 114/2018: từ chân đập trở ra hạ lưu 50m, thượng lưu 50m, hai bên vai đập 20m; xác định phạm vi bảo vệ tuyến hầm và nhà máy." },
+          { step: "Bước 2", name: "Khảo sát đo đạc thực địa vị trí tim mốc bảo vệ", detail: "Sử dụng GPS RTK đo đạc hiện trạng các góc ranh giới đập chính, tràn, cửa nhận nước, các đập gom Chiron 1, 2, 4 và nhà máy." },
+          { step: "Bước 3", name: "Tính toán bảng tọa độ mốc theo hệ VN-2000", detail: "Biên tập danh mục tọa độ X, Y các điểm mốc (kinh tuyến trục 107°45', múi chiếu 3°), khoảng cách giữa các mốc và lý trình." },
+          { step: "Bước 4", name: "Thiết kế quy cách mốc & Lập dự toán cắm mốc thực địa", detail: "Thiết kế cột mốc bê tông M200 cốt thép (15x15x80cm), đúc chôn sâu 50cm, mặt mốc sơn đỏ phản quang; lập dự toán chi phí đúc mốc và cắm mốc ngoài công trường." },
+          { step: "Bước 5", name: "Lập hồ sơ phương án & Trình cơ quan nhà nước phê duyệt", detail: "Hoàn thiện thuyết minh, bản vẽ bình đồ cắm mốc tỷ lệ 1/1.000 - 1/2.000, trình Sở Công Thương thẩm định, UBND TP phê duyệt." }
+        ],
+        requiredDocs: [
+          "Quyết định thu hồi đất, giao đất / thuê đất công trình Thủy điện Trà Linh 1",
+          "Bản đồ trích lục địa chính khu đất công trình đầu mối và nhà máy",
+          "Bản vẽ hoàn công mặt bằng tổng thể đập chính, các đập Chiron và nhà máy",
+          "Hiện trạng các mốc ranh đất dự án đã bàn giao ngoài thực địa"
+        ]
+      },
+      {
+        id: 5,
+        title: "Phương án cắm mốc hành lang bảo vệ nguồn nước hồ chứa",
+        duration: "30 ngày",
+        cost: "150.000.000 VNĐ",
+        authority: "Sở NN&MT thẩm định, UBND TP phê duyệt",
+        legal: "Điều 23, Điều 24 Luật TNN 2023; Điều 8, 9, 10 Nghị định 53/2024/NĐ-CP",
+        icon: "fa-border-all",
+        color: "rose",
+        desc: "Xác lập ranh giới hành lang bảo vệ nguồn nước hồ chứa thủy điện dọc theo đường viền mực nước dâng bình thường 1.167m để phòng chống sạt lở và ô nhiễm nguồn nước.",
+        software: "GIS / AutoCAD & Đo đạc trắc địa công trình",
+        steps: [
+          { step: "Bước 1", name: "Thu thập đường viền MNDBT 1167m & Ranh giới lòng hồ", detail: "Trích xuất đường đồng mức cao trình 1.167m từ bình đồ địa hình và ranh giới giải phóng mặt bằng lòng hồ đã được duyệt." },
+          { step: "Bước 2", name: "Xác định phạm vi hành lang theo Nghị định 53/2024/NĐ-CP", detail: "Xác định hành lang bảo vệ nguồn nước từ đường biên MNDBT (1167m) trở lên đến ranh giới GPMB lòng hồ hoặc khoảng cách quy định." },
+          { step: "Bước 3", name: "Khảo sát vạch tuyến mốc thực địa quanh chu vi hồ", detail: "Khảo sát thực địa sườn núi quanh lòng hồ suối Nước Nô, chọn vị trí cắm mốc tại các góc ngoặt, nơi tiếp giáp đường giao thông và đất dân canh tác." },
+          { step: "Bước 4", name: "Tính toán tọa độ VN-2000, quy cách mốc & Dự toán", detail: "Lập bảng tọa độ toàn bộ hệ thống mốc nguồn nước (HLBVNN); thiết kế mốc bê tông M200 (15x15x100cm), ghi số hiệu mốc; lập dự toán cắm mốc thực địa." },
+          { step: "Bước 5", name: "Lấy ý kiến địa phương & Trình Sở NN&MT thẩm định", detail: "Lấy ý kiến UBND xã Trà Linh, Trà Tập; hoàn chỉnh tờ trình nộp Sở Nông nghiệp & Môi trường thẩm định, trình UBND TP Đà Nẵng phê duyệt." }
+        ],
+        requiredDocs: [
+          "Bình đồ địa hình lòng hồ (file CAD) chi tiết quanh cao trình 1.167m - 1.172m",
+          "Hồ sơ đo đạc bồi thường GPMB vùng ngập lòng hồ chứa",
+          "Bản đồ địa chính khu vực ngập nước và tiếp giáp đất lâm nghiệp/sản xuất",
+          "Giấy phép khai thác nước mặt số 308/GP-BNNMT ngày 05/8/2025"
+        ]
+      }
+    ];
+
+    const DEFAULT_DOCS = [
+      { id: 1, package: "Đầu mối & Tràn", title: "Bản vẽ hoàn công / BVTC đập chính, tràn tự do, cống xả cát, cống xả D250", purpose: "Kiểm tra kích thước, cao trình để tính ngập lụt, xả lũ và mốc bảo vệ đập", statusInStorage: "Đã có bản vẽ TKCS hiệu chỉnh 2026", cdtDuty: "CĐT cung cấp bản vẽ hoàn công / thi công thực tế mới nhất", deadline: "N + 3", state: "received" },
+      { id: 2, package: "Chiron & Hầm", title: "Bản vẽ hoàn công / thi công đập gom Chiron 1, 2, 4 và tuyến hầm gom Chiron 4", purpose: "Quy trình vận hành, cắm mốc bảo vệ đập và mốc hành lang suối", statusInStorage: "Đã có bản vẽ TKCS hiệu chỉnh 2026", cdtDuty: "CĐT xác nhận hiện trạng thi công các đập Chiron và hầm gom", deadline: "N + 3", state: "received" },
+      { id: 3, package: "Nhà máy & Kênh xả", title: "Bản vẽ hoàn công Nhà máy, Kênh xả hạ lưu và Trạm biến áp 110kV", purpose: "Lập bản đồ ngập lụt, EAP và mốc phạm vi bảo vệ nhà máy", statusInStorage: "Đã có bản vẽ TKCS hiệu chỉnh 2026", cdtDuty: "CĐT cung cấp bản vẽ cập nhật thực tế", deadline: "N + 3", state: "received" },
+      { id: 4, package: "Thủy năng", title: "Bảng tra quan hệ Mực nước - Dung tích - Diện tích mặt nước hồ (Z - V - F)", purpose: "Tính toán điều tiết lũ, điều tiết kiệt và quy trình vận hành hồ", statusInStorage: "Đã có trong Báo cáo Thủy năng", cdtDuty: "CĐT xác nhận tính chuẩn xác của bảng tra", deadline: "N + 2", state: "received" },
+      { id: 5, package: "Địa hình", title: "Bình đồ địa hình hạ du suối Nước Nô (file CAD) từ chân đập đến hồ Trà Linh 2", purpose: "Dựng mô hình thủy lực mô phỏng ngập lụt hạ du và vỡ đập (HEC-RAS)", statusInStorage: "Chưa có file đo chi tiết lòng dẫn hạ du", cdtDuty: "CĐT bàn giao file số đo đạc địa hình lòng dẫn hạ du", deadline: "N + 5", state: "needed" },
+      { id: 6, package: "Địa hình", title: "Bình đồ địa hình khu vực lòng hồ (file CAD) quanh cao trình 1.167m - 1.172m", purpose: "Lập phương án cắm mốc hành lang bảo vệ nguồn nước hồ chứa", statusInStorage: "Đã có bình đồ tổng thể", cdtDuty: "CĐT cung cấp file số CAD đo đạc chi tiết lòng hồ", deadline: "N + 5", state: "needed" },
+      { id: 7, package: "Đất đai & GPMB", title: "Quyết định giao đất, cho thuê đất và Bản đồ trích lục địa chính khu đất công trình", purpose: "Xác định cơ sở pháp lý và ranh giới cắm mốc phạm vi bảo vệ công trình", statusInStorage: "Chưa có trong hồ sơ", cdtDuty: "CĐT cung cấp bản sao hồ sơ giao đất / thuê đất", deadline: "N + 5", state: "needed" },
+      { id: 8, package: "Đất đai & GPMB", title: "Hồ sơ đo đạc bồi thường GPMB vùng lòng hồ chứa và các khu phụ trợ", purpose: "Xác lập ranh giới hành lang nguồn nước và các điểm tiếp giáp đất dân", statusInStorage: "Chưa có", cdtDuty: "CĐT cung cấp hồ sơ trích lục GPMB lòng hồ", deadline: "N + 5", state: "needed" },
+      { id: 9, package: "Thiết bị", title: "Thông số kỹ thuật Tuabin Pelton và kiểm định thời gian đóng kim phun (T = 35s)", purpose: "Tính toán chuẩn xác quy trình vận hành đóng mở máy và lưu lượng", statusInStorage: "Đã có HĐ Global Hydro & phụ lục", cdtDuty: "CĐT xác nhận biên bản thí nghiệm/thông số nhà thầu", deadline: "N + 3", state: "received" },
+      { id: 10, package: "Môi trường", title: "Hiện trạng & thông số thiết bị đo lưu lượng xả tối thiểu ống D250 và các Chiron", purpose: "Đưa vào quy trình vận hành hồ và giám sát tài nguyên nước", statusInStorage: "Đã có thiết kế kỹ thuật", cdtDuty: "CĐT cung cấp biên bản nghiệm thu thiết bị đo đã lắp đặt", deadline: "N + 5", state: "needed" },
+      { id: 11, package: "PCTT", title: "Sơ đồ và vị trí lắp đặt hệ thống cảnh báo xả lũ hạ du (còi báo động, loa, camera)", purpose: "Lập phương án ứng phó khẩn cấp EAP và quy trình cảnh báo xả lũ", statusInStorage: "Chưa có sơ đồ thực tế", cdtDuty: "CĐT cung cấp hiện trạng mạng lưới cảnh báo đã lắp đặt", deadline: "N + 5", state: "needed" },
+      { id: 12, package: "Nhân sự", title: "Quyết định thành lập & Danh sách Ban chỉ huy PCTT & TKCN Thủy điện Trà Linh 1", purpose: "Đưa vào Phương án ứng phó tình huống khẩn cấp (EAP)", statusInStorage: "Chưa có", cdtDuty: "CĐT ban hành quyết định kiện toàn và cung cấp danh sách/SĐT 24/7", deadline: "N + 5", state: "needed" },
+      { id: 13, package: "Chính quyền", title: "Thông tin đầu mối PCTT&TKCN của huyện Nam Trà My, xã Trà Linh, xã Trà Tập", purpose: "Hoàn thiện danh bạ khẩn cấp trong EAP", statusInStorage: "Chưa có", cdtDuty: "CĐT phối hợp liên hệ cung cấp đầu mối địa phương", deadline: "N + 5", state: "needed" },
+      { id: 14, package: "Bậc thang", title: "Thông tin liên lạc và thông số vận hành của Thủy điện Trà Linh 2 (cách 500m hạ du)", purpose: "Phối hợp điều tiết lũ bậc thang và thông báo hạ du", statusInStorage: "Đã có tọa độ và khoảng cách", cdtDuty: "CĐT cung cấp đầu mối liên hệ vận hành Trà Linh 2", deadline: "N + 5", state: "needed" },
+      { id: 15, package: "Thỏa thuận", title: "Hồ sơ thỏa thuận vị trí cắm mốc hoặc ý kiến sơ bộ của địa phương (nếu đã làm việc)", purpose: "Thực hiện phương án cắm mốc đập và hành lang nguồn nước", statusInStorage: "Chưa có", cdtDuty: "CĐT cung cấp các biên bản làm việc trước đây (nếu có)", deadline: "N + 7", state: "needed" }
+    ];
+
+    const DEFAULT_TASKS = [
+      // Gói 1
+      { id: 101, packageId: 1, title: "Thu thập tài liệu thủy văn, đường cong Z-V-F và đặc tính xả lũ đập chính", assignee: "Kỹ sư Thủy lực", deadline: "Ngày 5", priority: "Cao", status: "in_progress" },
+      { id: 102, packageId: 1, title: "Khảo sát thực địa lòng dẫn suối Nước Nô từ đập chính đến đập Trà Linh 2", assignee: "Kỹ sư Trắc địa", deadline: "Ngày 10", priority: "Cao", status: "todo" },
+      { id: 103, packageId: 1, title: "Thiết lập mô hình thủy lực 2D HEC-RAS & Gán hệ số nhám lòng dẫn", assignee: "Kỹ sư Thủy lực", deadline: "Ngày 20", priority: "Cao", status: "todo" },
+      { id: 104, packageId: 1, title: "Mô phỏng 4 kịch bản ngập lụt: P=1%, P=0,2%, bất thường và giả định vỡ đập", assignee: "Kỹ sư Thủy lực", deadline: "Ngày 30", priority: "Cao", status: "todo" },
+      { id: 105, packageId: 1, title: "Biên tập bản đồ ngập lụt số hóa tỷ lệ 1/5.000 & Hoàn thiện thuyết minh", assignee: "Tổ Tư vấn", deadline: "Ngày 40", priority: "Trung bình", status: "todo" },
+      { id: 106, packageId: 1, title: "Trình nộp Sở Công Thương thẩm định và UBND thành phố phê duyệt", assignee: "CĐT & Chủ trì", deadline: "Ngày 45", priority: "Cao", status: "todo" },
+
+      // Gói 2
+      { id: 201, packageId: 2, title: "Tiếp nhận dữ liệu vùng rủi ro ngập lụt từ Hạng mục 1", assignee: "Kỹ sư An toàn đập", deadline: "Ngày 35", priority: "Cao", status: "todo" },
+      { id: 202, packageId: 2, title: "Thống kê dân sinh, công trình hạ du xã Trà Linh & Trà Tập bị ảnh hưởng", assignee: "Kỹ sư Xã hội", deadline: "Ngày 38", priority: "Trung bình", status: "todo" },
+      { id: 203, packageId: 2, title: "Xác lập bản đồ sơ tán, điểm tránh lũ an toàn và tuyến cơ động cứu hộ", assignee: "Kỹ sư An toàn đập", deadline: "Ngày 42", priority: "Cao", status: "todo" },
+      { id: 204, packageId: 2, title: "Xây dựng ma trận thông báo khẩn cấp & Cơ chế chỉ đạo 4 tại chỗ", assignee: "Kỹ sư An toàn đập", deadline: "Ngày 45", priority: "Trung bình", status: "todo" },
+      { id: 205, packageId: 2, title: "Tham vấn chính quyền xã Trà Linh, Trà Tập và trình phê duyệt Phương án EAP", assignee: "CĐT & Chủ trì", deadline: "Ngày 50", priority: "Cao", status: "todo" },
+
+      // Gói 3
+      { id: 301, packageId: 3, title: "Rà soát thông số kỹ thuật đập chính, hồ chứa và tuabin Pelton (29,6MW)", assignee: "Kỹ sư Thủy năng", deadline: "Ngày 10", priority: "Trung bình", status: "in_progress" },
+      { id: 302, packageId: 3, title: "Tính toán điều tiết mùa lũ: nguyên tắc xả lũ, quy trình mở cống xả cát 4x5m", assignee: "Kỹ sư Thủy năng", deadline: "Ngày 20", priority: "Cao", status: "todo" },
+      { id: 303, packageId: 3, title: "Tính toán điều tiết mùa kiệt & Duy trì dòng chảy tối thiểu sau đập và Chiron", assignee: "Kỹ sư Thủy năng", deadline: "Ngày 25", priority: "Cao", status: "todo" },
+      { id: 304, packageId: 3, title: "Quy định hệ thống quan trắc, giám sát hồ và truyền dữ liệu trực tuyến", assignee: "Kỹ sư Tự động hóa", deadline: "Ngày 28", priority: "Trung bình", status: "todo" },
+      { id: 305, packageId: 3, title: "Lấy ý kiến Thủy điện Trà Linh 2 và nộp hồ sơ phê duyệt Quy trình vận hành", assignee: "CĐT & Chủ trì", deadline: "Ngày 35", priority: "Cao", status: "todo" },
+
+      // Gói 4
+      { id: 401, packageId: 4, title: "Xác định hành lang bảo vệ đập cấp II theo Điều 23 Nghị định 114/2018/NĐ-CP", assignee: "Kỹ sư Trắc địa", deadline: "Ngày 12", priority: "Trung bình", status: "todo" },
+      { id: 402, packageId: 4, title: "Khảo sát thực địa đo đạc ranh giới đầu mối, đập Chiron 1, 2, 4 và nhà máy", assignee: "Kỹ sư Trắc địa", deadline: "Ngày 22", priority: "Cao", status: "todo" },
+      { id: 403, packageId: 4, title: "Tính toán bảng tọa độ các mốc bảo vệ theo hệ VN-2000 (kinh tuyến 107°45')", assignee: "Kỹ sư Trắc địa", deadline: "Ngày 28", priority: "Cao", status: "todo" },
+      { id: 404, packageId: 4, title: "Thiết kế quy cách mốc bê tông M200 và lập dự toán cắm mốc thực địa", assignee: "Kỹ sư Dự toán", deadline: "Ngày 32", priority: "Trung bình", status: "todo" },
+      { id: 405, packageId: 4, title: "Hoàn thiện hồ sơ thuyết minh, bản vẽ và trình phê duyệt Phương án cắm mốc đập", assignee: "CĐT & Chủ trì", deadline: "Ngày 40", priority: "Cao", status: "todo" },
+
+      // Gói 5
+      { id: 501, packageId: 5, title: "Trích xuất đường viền MNDBT 1.167m và ranh giới GPMB lòng hồ chứa", assignee: "Kỹ sư Bản đồ", deadline: "Ngày 15", priority: "Trung bình", status: "todo" },
+      { id: 502, packageId: 5, title: "Xác định ranh giới hành lang nguồn nước theo Nghị định 53/2024/NĐ-CP", assignee: "Kỹ sư Môi trường", deadline: "Ngày 24", priority: "Cao", status: "todo" },
+      { id: 503, packageId: 5, title: "Khảo sát thực địa vạch tuyến cắm mốc quanh chu vi hồ suối Nước Nô", assignee: "Kỹ sư Trắc địa", deadline: "Ngày 32", priority: "Cao", status: "todo" },
+      { id: 504, packageId: 5, title: "Lập danh mục tọa độ mốc VN-2000, bản vẽ cắm mốc tỷ lệ 1/2.000 & Dự toán", assignee: "Kỹ sư Trắc địa", deadline: "Ngày 38", priority: "Trung bình", status: "todo" },
+      { id: 505, packageId: 5, title: "Lấy ý kiến xã Trà Linh, Trà Tập và nộp Sở NN&MT thẩm định, trình UBND TP phê duyệt", assignee: "CĐT & Chủ trì", deadline: "Ngày 45", priority: "Cao", status: "todo" }
+    ];
+
+    // STATE MANAGEMENT (WITH LOCALSTORAGE)
+    let packages = JSON.parse(localStorage.getItem('tl1_packages')) || DEFAULT_PACKAGES;
+    let docs = JSON.parse(localStorage.getItem('tl1_docs')) || DEFAULT_DOCS;
+    let tasks = JSON.parse(localStorage.getItem('tl1_tasks')) || DEFAULT_TASKS;
+
+    function saveState() {
+      localStorage.setItem('tl1_packages', JSON.stringify(packages));
+      localStorage.setItem('tl1_docs', JSON.stringify(docs));
+      localStorage.setItem('tl1_tasks', JSON.stringify(tasks));
+      updateDashboardMetrics();
+    }
+
+    // TAB SWITCHING
+    function switchTab(tabId) {
+      document.querySelectorAll('.tab-pane').forEach(el => el.classList.add('hidden'));
+      const activePane = document.getElementById('tab-' + tabId);
+      if (activePane) activePane.classList.remove('hidden');
+
+      // Update Desktop tabs
+      document.querySelectorAll('.tab-btn').forEach(btn => {
+        btn.classList.remove('active', 'text-sky-600', 'bg-sky-50');
+        btn.classList.add('text-slate-600');
+      });
+      const activeBtn = document.getElementById('btn-tab-' + tabId);
+      if (activeBtn) {
+        activeBtn.classList.add('active', 'text-sky-600', 'bg-sky-50');
+        activeBtn.classList.remove('text-slate-600');
+      }
+
+      // Update Mobile tabs
+      document.querySelectorAll('.tab-btn-m').forEach(btn => {
+        btn.classList.remove('active', 'text-sky-600', 'bg-sky-50');
+        btn.classList.add('text-slate-600');
+      });
+
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+
+    // UPDATE METRICS
+    function updateDashboardMetrics() {
+      // Tasks completion
+      const totalTasks = tasks.length;
+      const doneTasks = tasks.filter(t => t.status === 'done').length;
+      const progressPercent = totalTasks > 0 ? Math.round((doneTasks / totalTasks) * 100) : 0;
+      
+      document.getElementById('metric-overall-progress').innerText = progressPercent + '%';
+      document.getElementById('metric-progress-bar').style.width = progressPercent + '%';
+
+      // Docs received
+      const totalDocs = docs.length;
+      const receivedDocs = docs.filter(d => d.state === 'received').length;
+      const docsPercent = totalDocs > 0 ? Math.round((receivedDocs / totalDocs) * 100) : 0;
+
+      document.getElementById('metric-docs-count').innerText = `${receivedDocs}/${totalDocs}`;
+      document.getElementById('metric-docs-bar').style.width = docsPercent + '%';
+
+      // Task status stats
+      const inProgressTasks = tasks.filter(t => t.status === 'in_progress').length;
+      const reviewTasks = tasks.filter(t => t.status === 'review').length;
+
+      document.getElementById('stat-tasks-total').innerText = totalTasks;
+      document.getElementById('stat-tasks-inprogress').innerText = inProgressTasks;
+      document.getElementById('stat-tasks-review').innerText = reviewTasks;
+      document.getElementById('stat-tasks-done').innerText = doneTasks;
+
+      // Render packages cards on Dashboard
+      renderDashboardPackagesCards();
+    }
+
+    // RENDER PACKAGES CARDS ON DASHBOARD
+    function renderDashboardPackagesCards() {
+      const container = document.getElementById('packages-cards-container');
+      if (!container) return;
+
+      container.innerHTML = packages.map(pkg => {
+        const pkgTasks = tasks.filter(t => t.packageId === pkg.id);
+        const pkgDone = pkgTasks.filter(t => t.status === 'done').length;
+        const pct = pkgTasks.length > 0 ? Math.round((pkgDone / pkgTasks.length) * 100) : 0;
+
+        return `
+          <div class="bg-slate-50 border border-slate-200/90 rounded-xl p-4 flex flex-col justify-between hover:border-sky-300 hover:shadow-md transition-all">
+            <div>
+              <div class="flex items-center justify-between mb-2">
+                <span class="w-7 h-7 rounded-lg bg-${pkg.color}-100 text-${pkg.color}-700 flex items-center justify-center text-xs font-bold">
+                  <i class="fa-solid ${pkg.icon}"></i>
+                </span>
+                <span class="text-[11px] font-bold text-slate-500">${pkg.duration}</span>
+              </div>
+              <h4 class="font-bold text-slate-900 text-xs sm:text-sm line-clamp-2 mb-1">${pkg.title}</h4>
+              <div class="text-[11px] font-semibold text-emerald-700 mb-3">${pkg.cost}</div>
+            </div>
+            <div>
+              <div class="flex justify-between text-[11px] text-slate-500 mb-1">
+                <span>Tiến độ:</span>
+                <span class="font-bold text-slate-800">${pct}% (${pkgDone}/${pkgTasks.length})</span>
+              </div>
+              <div class="w-full bg-slate-200 rounded-full h-1.5 overflow-hidden">
+                <div class="bg-sky-600 h-1.5 rounded-full" style="width: ${pct}%"></div>
+              </div>
+            </div>
+          </div>
+        `;
+      }).join('');
+    }
+
+    // RENDER 5 PACKAGES DETAILS IN TAB 3
+    function renderPackagesDetails() {
+      const container = document.getElementById('packages-detail-list');
+      if (!container) return;
+
+      container.innerHTML = packages.map((pkg, idx) => {
+        return `
+          <div class="bg-white rounded-2xl border border-slate-200 overflow-hidden shadow-sm">
+            <!-- Header bar -->
+            <div class="bg-gradient-to-r from-slate-900 via-slate-800 to-sky-950 p-5 text-white flex flex-col sm:flex-row sm:items-center justify-between gap-3">
+              <div class="flex items-center gap-3">
+                <div class="w-10 h-10 rounded-xl bg-sky-500/20 text-sky-300 border border-sky-400/30 flex items-center justify-center font-bold text-base">
+                  <i class="fa-solid ${pkg.icon}"></i>
+                </div>
+                <div>
+                  <div class="text-xs font-bold text-sky-400 uppercase tracking-wider">Hạng mục ${pkg.id}</div>
+                  <h3 class="text-lg font-bold text-white">${pkg.title}</h3>
+                </div>
+              </div>
+              <div class="flex flex-wrap items-center gap-2 text-xs">
+                <span class="px-3 py-1 bg-white/10 rounded-lg text-slate-200 font-medium border border-white/10">
+                  <i class="fa-regular fa-clock mr-1"></i> ${pkg.duration}
+                </span>
+                <span class="px-3 py-1 bg-emerald-500/20 text-emerald-300 rounded-lg font-bold border border-emerald-400/30">
+                  ${pkg.cost}
+                </span>
+              </div>
+            </div>
+
+            <!-- Body -->
+            <div class="p-5 sm:p-6 space-y-6 text-xs sm:text-sm">
+              <!-- Objective & Legal -->
+              <div class="grid grid-cols-1 md:grid-cols-2 gap-4 bg-slate-50 p-4 rounded-xl border border-slate-100">
+                <div>
+                  <div class="text-slate-400 uppercase font-bold text-[10px] tracking-wider mb-1">Căn cứ pháp lý & Thẩm quyền duyệt</div>
+                  <div class="font-semibold text-slate-800 mb-1">${pkg.legal}</div>
+                  <div class="text-sky-700 font-medium"><i class="fa-solid fa-stamp mr-1"></i> ${pkg.authority}</div>
+                </div>
+                <div>
+                  <div class="text-slate-400 uppercase font-bold text-[10px] tracking-wider mb-1">Mục tiêu & Công cụ chuyên dụng</div>
+                  <p class="text-slate-700 mb-1 leading-relaxed">${pkg.desc}</p>
+                  <div class="text-emerald-700 font-semibold"><i class="fa-solid fa-laptop-code mr-1"></i> Phần mềm: ${pkg.software}</div>
+                </div>
+              </div>
+
+              <!-- Steps & Calculation Process -->
+              <div>
+                <h4 class="font-bold text-slate-900 text-sm mb-3 flex items-center gap-2">
+                  <i class="fa-solid fa-calculator text-sky-600"></i> Các bước tính toán & Quy trình làm việc chi tiết
+                </h4>
+                <div class="space-y-3">
+                  ${pkg.steps.map(s => `
+                    <div class="border border-slate-200 rounded-xl p-3.5 hover:bg-slate-50/80 transition-colors">
+                      <div class="flex items-center gap-2 font-bold text-slate-900 text-xs sm:text-sm mb-1">
+                        <span class="px-2 py-0.5 rounded bg-sky-100 text-sky-800 text-[11px]">${s.step}</span>
+                        <span>${s.name}</span>
+                      </div>
+                      <p class="text-xs text-slate-600 leading-relaxed pl-1 sm:pl-2">${s.detail}</p>
+                    </div>
+                  `).join('')}
+                </div>
+              </div>
+
+              <!-- Required Data list -->
+              <div class="border-t border-slate-100 pt-4">
+                <h4 class="font-bold text-slate-900 text-sm mb-2 flex items-center gap-2">
+                  <i class="fa-solid fa-file-circle-check text-indigo-600"></i> Dữ liệu & Hồ sơ bắt buộc phải có cho hạng mục này
+                </h4>
+                <ul class="grid grid-cols-1 md:grid-cols-2 gap-2 text-xs text-slate-700">
+                  ${pkg.requiredDocs.map(d => `
+                    <li class="flex items-start gap-2 bg-indigo-50/50 p-2.5 rounded-lg border border-indigo-100">
+                      <i class="fa-solid fa-check text-indigo-600 mt-0.5"></i>
+                      <span>${d}</span>
+                    </li>
+                  `).join('')}
+                </ul>
+              </div>
+            </div>
+          </div>
+        `;
+      }).join('');
+    }
+
+    // RENDER DOCS TABLE IN TAB 4
+    let currentDocFilter = 'all';
+
+    function filterDocs(type) {
+      currentDocFilter = type;
+      document.querySelectorAll('.doc-filter-btn').forEach(b => {
+        b.classList.remove('bg-sky-600', 'text-white');
+        b.classList.add('bg-slate-100', 'text-slate-600');
+      });
+      event.target.classList.add('bg-sky-600', 'text-white');
+      event.target.classList.remove('bg-slate-100', 'text-slate-600');
+      renderDocsTable();
+    }
+
+    function renderDocsTable() {
+      const tbody = document.getElementById('docs-table-body');
+      if (!tbody) return;
+
+      let filtered = docs;
+      if (currentDocFilter === 'needed') {
+        filtered = docs.filter(d => d.state !== 'received');
+      } else if (currentDocFilter === 'received') {
+        filtered = docs.filter(d => d.state === 'received');
+      }
+
+      tbody.innerHTML = filtered.map((d, index) => {
+        let stateBadge = '';
+        if (d.state === 'received') {
+          stateBadge = `<button onclick="cycleDocState(${d.id})" class="px-2.5 py-1 rounded-full text-xs font-semibold bg-emerald-100 text-emerald-800 hover:bg-emerald-200 border border-emerald-300"><i class="fa-solid fa-check mr-1"></i> Đã nhận</button>`;
+        } else if (d.state === 'in_progress') {
+          stateBadge = `<button onclick="cycleDocState(${d.id})" class="px-2.5 py-1 rounded-full text-xs font-semibold bg-amber-100 text-amber-800 hover:bg-amber-200 border border-amber-300"><i class="fa-solid fa-clock mr-1"></i> Đang xử lý</button>`;
+        } else {
+          stateBadge = `<button onclick="cycleDocState(${d.id})" class="px-2.5 py-1 rounded-full text-xs font-semibold bg-red-100 text-red-800 hover:bg-red-200 border border-red-300"><i class="fa-solid fa-hourglass-start mr-1"></i> Chưa nhận</button>`;
+        }
+
+        return `
+          <tr class="hover:bg-slate-50/80 transition-colors">
+            <td class="p-3.5 text-center font-bold text-slate-400">${d.id}</td>
+            <td class="p-3.5">
+              <div class="font-bold text-slate-900">${d.title}</div>
+              <span class="inline-block px-2 py-0.5 rounded bg-slate-100 text-slate-600 text-[10px] font-semibold mt-1">${d.package}</span>
+            </td>
+            <td class="p-3.5 text-slate-600 leading-snug">${d.purpose}</td>
+            <td class="p-3.5 text-xs">
+              <span class="${d.statusInStorage.includes('Chưa') ? 'text-amber-700 font-semibold' : 'text-slate-600'}">
+                ${d.statusInStorage}
+              </span>
+            </td>
+            <td class="p-3.5 text-slate-800 font-medium">${d.cdtDuty}</td>
+            <td class="p-3.5 text-center font-bold text-sky-700">${d.deadline}</td>
+            <td class="p-3.5 text-center">${stateBadge}</td>
+          </tr>
+        `;
+      }).join('');
+    }
+
+    function cycleDocState(docId) {
+      const docItem = docs.find(d => d.id === docId);
+      if (!docItem) return;
+
+      if (docItem.state === 'received') {
+        docItem.state = 'needed';
+      } else if (docItem.state === 'needed') {
+        docItem.state = 'in_progress';
+      } else {
+        docItem.state = 'received';
+      }
+      saveState();
+      renderDocsTable();
+    }
+
+    function resetDocsState() {
+      if (confirm('Bạn có chắc muốn đặt lại trạng thái danh mục tài liệu về mặc định?')) {
+        docs = JSON.parse(JSON.stringify(DEFAULT_DOCS));
+        saveState();
+        renderDocsTable();
+      }
+    }
+
+    // RENDER TASKS BOARD IN TAB 5
+    let currentTaskFilterPkg = 'all';
+    let currentTaskFilterStatus = 'all';
+
+    function filterTasks() {
+      currentTaskFilterPkg = document.getElementById('task-filter-package').value;
+      currentTaskFilterStatus = document.getElementById('task-filter-status').value;
+      renderTasksList();
+    }
+
+    function renderTasksList() {
+      const container = document.getElementById('tasks-container');
+      if (!container) return;
+
+      let filtered = tasks;
+      if (currentTaskFilterPkg !== 'all') {
+        filtered = filtered.filter(t => t.packageId === parseInt(currentTaskFilterPkg));
+      }
+      if (currentTaskFilterStatus !== 'all') {
+        filtered = filtered.filter(t => t.status === currentTaskFilterStatus);
+      }
+
+      if (filtered.length === 0) {
+        container.innerHTML = `<div class="p-8 text-center text-slate-400 text-sm">Không tìm thấy công việc phù hợp với bộ lọc.</div>`;
+        return;
+      }
+
+      container.innerHTML = filtered.map(t => {
+        const pkg = packages.find(p => p.id === t.packageId) || { title: 'Chung' };
+        
+        let priorityBadge = '';
+        if (t.priority === 'Cao') priorityBadge = '<span class="px-2 py-0.5 rounded text-[10px] font-bold bg-red-100 text-red-700 border border-red-200">Ưu tiên Cao</span>';
+        else if (t.priority === 'Trung bình') priorityBadge = '<span class="px-2 py-0.5 rounded text-[10px] font-bold bg-amber-100 text-amber-700 border border-amber-200">Trung bình</span>';
+        else priorityBadge = '<span class="px-2 py-0.5 rounded text-[10px] font-bold bg-slate-100 text-slate-600">Thấp</span>';
+
+        return `
+          <div class="p-4 sm:p-5 flex flex-col sm:flex-row sm:items-center justify-between gap-3 hover:bg-slate-50 transition-colors">
+            <div class="flex items-start gap-3">
+              <input type="checkbox" onchange="toggleTaskDone(${t.id})" ${t.status === 'done' ? 'checked' : ''} class="mt-1 w-4 h-4 rounded text-sky-600 focus:ring-sky-500 cursor-pointer">
+              <div>
+                <div class="flex flex-wrap items-center gap-2 mb-1">
+                  <span class="px-2 py-0.5 rounded bg-sky-50 text-sky-700 font-semibold text-[10px]">Hạng mục ${t.packageId}</span>
+                  ${priorityBadge}
+                </div>
+                <h4 class="font-bold text-slate-900 text-xs sm:text-sm ${t.status === 'done' ? 'line-through text-slate-400' : ''}">${t.title}</h4>
+                <div class="flex flex-wrap items-center gap-3 text-xs text-slate-500 mt-1">
+                  <span><i class="fa-solid fa-user-gear mr-1 text-slate-400"></i> ${t.assignee}</span>
+                  <span><i class="fa-regular fa-calendar mr-1 text-slate-400"></i> Hạn: ${t.deadline}</span>
+                </div>
+              </div>
+            </div>
+
+            <!-- Status dropdown -->
+            <div class="flex items-center gap-2 self-end sm:self-center shrink-0">
+              <select onchange="changeTaskStatus(${t.id}, this.value)" class="text-xs border border-slate-200 rounded-xl px-2.5 py-1.5 font-semibold focus:outline-none focus:ring-2 focus:ring-sky-500 ${
+                t.status === 'done' ? 'bg-emerald-50 text-emerald-700 border-emerald-300' :
+                t.status === 'in_progress' ? 'bg-amber-50 text-amber-700 border-amber-300' :
+                t.status === 'review' ? 'bg-indigo-50 text-indigo-700 border-indigo-300' :
+                'bg-slate-100 text-slate-700'
+              }">
+                <option value="todo" ${t.status === 'todo' ? 'selected' : ''}>Chưa làm</option>
+                <option value="in_progress" ${t.status === 'in_progress' ? 'selected' : ''}>Đang làm</option>
+                <option value="review" ${t.status === 'review' ? 'selected' : ''}>Chờ thẩm tra</option>
+                <option value="done" ${t.status === 'done' ? 'selected' : ''}>Hoàn thành</option>
+              </select>
+              <button onclick="deleteTask(${t.id})" title="Xóa task" class="text-slate-300 hover:text-red-500 p-1.5">
+                <i class="fa-solid fa-trash-can text-xs"></i>
+              </button>
+            </div>
+          </div>
+        `;
+      }).join('');
+    }
+
+    function toggleTaskDone(taskId) {
+      const t = tasks.find(item => item.id === taskId);
+      if (!t) return;
+      t.status = t.status === 'done' ? 'todo' : 'done';
+      saveState();
+      renderTasksList();
+    }
+
+    function changeTaskStatus(taskId, newStatus) {
+      const t = tasks.find(item => item.id === taskId);
+      if (!t) return;
+      t.status = newStatus;
+      saveState();
+      renderTasksList();
+    }
+
+    function deleteTask(taskId) {
+      if (confirm('Bạn có muốn xóa công việc này không?')) {
+        tasks = tasks.filter(t => t.id !== taskId);
+        saveState();
+        renderTasksList();
+      }
+    }
+
+    // MODAL ADD TASK
+    function openAddTaskModal() {
+      document.getElementById('modal-add-task').classList.remove('hidden');
+    }
+
+    function closeAddTaskModal() {
+      document.getElementById('modal-add-task').classList.add('hidden');
+      document.getElementById('new-task-title').value = '';
+      document.getElementById('new-task-assignee').value = '';
+      document.getElementById('new-task-deadline').value = '';
+    }
+
+    function saveNewTask() {
+      const title = document.getElementById('new-task-title').value.trim();
+      const pkgId = parseInt(document.getElementById('new-task-package').value);
+      const assignee = document.getElementById('new-task-assignee').value.trim() || 'Tổ Tư vấn';
+      const deadline = document.getElementById('new-task-deadline').value.trim() || 'Ngày 30';
+      const priority = document.getElementById('new-task-priority').value;
+
+      if (!title) {
+        alert('Vui lòng nhập tên công việc!');
+        return;
+      }
+
+      const newTask = {
+        id: Date.now(),
+        packageId: pkgId,
+        title: title,
+        assignee: assignee,
+        deadline: deadline,
+        priority: priority,
+        status: 'todo'
+      };
+
+      tasks.push(newTask);
+      saveState();
+      closeAddTaskModal();
+      renderTasksList();
+      alert('Đã thêm công việc thành công!');
+    }
+
+    // EXPORT & IMPORT JSON
+    function exportDataJSON() {
+      const state = {
+        exportDate: new Date().toISOString(),
+        packages: packages,
+        docs: docs,
+        tasks: tasks
+      };
+      const jsonStr = JSON.stringify(state, null, 2);
+      const blob = new Blob([jsonStr], { type: 'application/json' });
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = `TraLinh1_PM_State_${new Date().toISOString().slice(0, 10)}.json`;
+      document.body.appendChild(a);
+      a.click();
+      document.body.removeChild(a);
+      URL.revokeObjectURL(url);
+    }
+
+    function importDataJSON(event) {
+      const file = event.target.files[0];
+      if (!file) return;
+
+      const reader = new FileReader();
+      reader.onload = function(e) {
+        try {
+          const imported = JSON.parse(e.target.result);
+          if (imported.tasks && imported.docs) {
+            tasks = imported.tasks;
+            docs = imported.docs;
+            if (imported.packages) packages = imported.packages;
+            saveState();
+            renderDocsTable();
+            renderTasksList();
+            renderPackagesDetails();
+            alert('Nhập dữ liệu dự án thành công!');
+          } else {
+            alert('File JSON không đúng cấu trúc quản lý dự án Trà Linh 1.');
+          }
+        } catch (err) {
+          alert('Lỗi khi đọc file JSON: ' + err.message);
+        }
+      };
+      reader.readAsText(file);
+      event.target.value = '';
+    }
+
+    function resetAllData() {
+      if (confirm('CẢNH BÁO: Thao tác này sẽ đặt lại toàn bộ tiến độ, danh mục hồ sơ và công việc về trạng thái ban đầu. Bạn có chắc chắn muốn reset không?')) {
+        localStorage.removeItem('tl1_packages');
+        localStorage.removeItem('tl1_docs');
+        localStorage.removeItem('tl1_tasks');
+        packages = JSON.parse(JSON.stringify(DEFAULT_PACKAGES));
+        docs = JSON.parse(JSON.stringify(DEFAULT_DOCS));
+        tasks = JSON.parse(JSON.stringify(DEFAULT_TASKS));
+        saveState();
+        renderDocsTable();
+        renderTasksList();
+        renderPackagesDetails();
+        alert('Đã reset toàn bộ dữ liệu về mặc định.');
+      }
+    }
+
+    // INITIALIZATION
+    window.addEventListener('DOMContentLoaded', () => {
+      renderPackagesDetails();
+      renderDocsTable();
+      renderTasksList();
+      updateDashboardMetrics();
+    });
+  </script>
+</body>
+</html>
